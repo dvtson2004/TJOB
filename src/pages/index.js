@@ -103,7 +103,7 @@ export default function Index() {
 
                         <div className="col-lg-6 col-md-3 d-none d-md-block">
                             <div className="text-md-end">
-                                <Link to="/job-grid-one" className="btn btn-link primary text-muted">See More Jobs <i className="mdi mdi-arrow-right"></i></Link>
+                                <Link to="/job-list-one" className="btn btn-link primary text-muted">See More Jobs <i className="mdi mdi-arrow-right"></i></Link>
                             </div>
                         </div>
                     </div>

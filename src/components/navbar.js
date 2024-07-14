@@ -13,7 +13,7 @@ import {
   FiBook,
 } from "../assets/icons/vander";
 
-import useEnterpriseInfo from '../hook/useEnterpriseInfo';
+import useEnterpriseInfo from "../hook/useEnterpriseInfo";
 import useJobSeekerInfo from "../hook/useJobSeekerInfo";
 
 export default function Navbar({ navClass, navLight }) {
@@ -31,6 +31,7 @@ export default function Navbar({ navClass, navLight }) {
   const { data: enterpriseData } = useEnterpriseInfo();
   const jobSeekerRole = sessionStorage.getItem("roleJobSeeker");
   const enterpriseRole = sessionStorage.getItem("roleEnterprise");
+  const adminRole = sessionStorage.getItem("roleAdmin");
   const jobseeker = jobseekerData?.data;
   const enterprise = enterpriseData?.data;
 
@@ -96,6 +97,7 @@ export default function Navbar({ navClass, navLight }) {
     } else if (enterpriseRole && enterprise?.avatar_url) {
       return enterprise.avatar_url;
     }
+    return "https://res.cloudinary.com/dz9kynjwb/image/upload/v1717770585/OIP_bsmlku.jpg";
   };
 
   const renderUser = () => (
@@ -160,6 +162,17 @@ export default function Navbar({ navClass, navLight }) {
             >
               <FiBook className="fea icon-sm me-2 align-middle" />
               Applied List
+            </Link>
+          )}
+          <div className="dropdown-divider border-top"></div>
+
+          {adminRole && (
+            <Link
+              to="/admin/dashboard"
+              className="dropdown-item fw-medium fs-6"
+            >
+              <FiBook className="fea icon-sm me-2 align-middle" />
+              Admin Dashboard
             </Link>
           )}
           <div className="dropdown-divider border-top"></div>
@@ -261,7 +274,7 @@ export default function Navbar({ navClass, navLight }) {
           </li>
 
           <li className="list-inline-item ps-1 mb-0">
-            {jobSeekerRole || enterpriseRole ? (
+            {jobSeekerRole || enterpriseRole || adminRole ? (
               renderUser()
             ) : (
               <div className="dropdown dropdown-primary">
@@ -327,13 +340,7 @@ export default function Navbar({ navClass, navLight }) {
                 </Link>
               </li>
             )}
-            {enterpriseRole && (
-              <li className={manu === "job-list-by-enterprise" ? "active" : ""}>
-                <Link to="/job-list-by-enterprise" className="sub-menu-item">
-                  Your Job
-                </Link>
-              </li>
-            )}
+
             <li
               className={`${[
                   "aboutus",
@@ -420,36 +427,33 @@ export default function Navbar({ navClass, navLight }) {
                 </li>
               </ul>
             </li>
-            {jobSeekerRole && (
-              <li
-                className={`${["blogs", "blog-sidebar", "blog-detail"].includes(manu)
+
+            <li
+              className={`${["blogs", "blog-sidebar", "blog-detail"].includes(manu)
                   ? "active"
                   : ""
-                  } has-submenu parent-menu-item`}
-              >
-                <Link to="#"> Blog </Link>
-                <span className="submenu-arrow"></span>
-                <ul className="submenu">
-                  <li className={manu === "blogs" ? "active" : ""}>
-                    <Link to="/blogs" className="sub-menu-item">
-                      Blogs
-                    </Link>
-                  </li>
-                  <li className={manu === "blog-sidebar" ? "active" : ""}>
-                    <Link to="/blog-sidebar" className="sub-menu-item">
-                      Blog Sidebar
-                    </Link>
-                  </li>
-                  <li className={manu === "blog-detail" ? "active" : ""}>
-                    <Link to="/blog-detail" className="sub-menu-item">
-                      Blog Detail
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-            )}
-
-
+                } has-submenu parent-menu-item`}
+            >
+              <Link to="#"> Blog </Link>
+              <span className="submenu-arrow"></span>
+              <ul className="submenu">
+                <li className={manu === "blogs" ? "active" : ""}>
+                  <Link to="/blogs" className="sub-menu-item">
+                    Blogs
+                  </Link>
+                </li>
+                {/* <li className={manu === "blog-sidebar" ? "active" : ""}>
+                  <Link to="/blog-sidebar" className="sub-menu-item">
+                    Blog Sidebar
+                  </Link>
+                </li> */}
+                <li className={manu === "blog-detail" ? "active" : ""}>
+                  <Link to="/blog-detail" className="sub-menu-item">
+                    Blog Detail
+                  </Link>
+                </li>
+              </ul>
+            </li>
             {jobSeekerRole && (
               <li className={manu === "createCV" ? "active" : ""}>
                 <Link to="/template" className="sub-menu-item">

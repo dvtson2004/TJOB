@@ -117,13 +117,18 @@ const Sidebar = () => {
               <span>   Transactions</span>
             </ul>
           </Link>
-          <Link to="/statistic" style={{ textDecoration: "none" }}>
+          {/* <Link to="/statistic" style={{ textDecoration: "none" }}>
             <ul>
               <AnalyticsIcon className="icon" />
               <span>   Statistic</span>
             </ul>
+          </Link> */}
+          <Link to="/create-template" style={{ textDecoration: "none" }}>
+            <ul>
+              <AnalyticsIcon className="icon" />
+              <span>   Create Template</span>
+            </ul>
           </Link>
-
           <li>
             <ExitToAppIcon className="icon" />
             <span onClick={() => {

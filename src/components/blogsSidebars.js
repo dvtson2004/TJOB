@@ -1,10 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { recentBlog } from "../data/data";
 
-export default function BlogsSidebars(){
-    
-    return(
+export default function BlogsSidebars() {
+    const [searchTerm, setSearchTerm] = useState("");
+    const [recentBlogs, setRecentBlogs] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchRecentBlogs = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/blogs/recent");
+                if (!response.ok) {
+                    throw new Error("Failed to fetch recent blogs");
+                }
+                const data = await response.json();
+                setRecentBlogs(data);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRecentBlogs();
+    }, []);
+
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredBlogs = recentBlogs.filter((blog) =>
+        blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    const recentBlogsToShow = filteredBlogs.slice(0, 5);
+
+    return (
         <div className="col-lg-4 col-md-6 col-12">
             <div className="card bg-white p-4 rounded shadow sticky-bar">
                 <div>
@@ -13,47 +45,56 @@ export default function BlogsSidebars(){
                     <div className="search-bar mt-4">
                         <div id="itemSearch2" className="menu-search mb-0">
                             <form className="searchform">
-                                <input type="text" className="form-control rounded border" name="s"  placeholder="Search..."/>
+                                <input
+                                    type="text"
+                                    className="form-control rounded border"
+                                    name="s"
+                                    placeholder="Search..."
+                                    value={searchTerm}
+                                    onChange={handleSearchChange}
+                                />
                                 <input type="submit" />
                             </form>
                         </div>
                     </div>
                 </div>
 
-                
                 <div className="mt-4 pt-2">
-                    <h6 className="pt-2 pb-2 bg-light rounded text-center">Recent Post</h6>
+                    <h6 className="pt-2 pb-2 bg-light rounded text-center">
+                        Recent Post
+                    </h6>
                     <div className="mt-4">
-                        {recentBlog.map((item,index)=>{
-                            return(
-                            <div className="blog blog-primary d-flex align-items-center mt-3" key={index}>
-                                <img src={item.image} className="avatar avatar-small rounded" style={{width:'auto'}} alt=""/>
-                                <div className="flex-1 ms-3">
-                                    <Link to="" className="d-block title text-dark fw-medium">{item.title}</Link>
-                                    <span className="text-muted small">{item.date}</span>
+                        {loading ? (
+                            <p>Loading...</p>
+                        ) : error ? (
+                            <p>Error: {error}</p>
+                        ) : (
+                            recentBlogsToShow.map((item, index) => (
+                                <div
+                                    className="blog blog-primary d-flex align-items-center mt-3"
+                                    key={index}
+                                >
+                                    <img
+                                        src={item.imageUrl}
+                                        className="avatar avatar-small rounded"
+                                        style={{ width: "auto" }}
+                                        alt=""
+                                    />
+                                    <div className="flex-1 ms-3">
+                                        <Link
+                                            to={`/blog-detail/${item.id}`} // Replace with actual link path
+                                            className="d-block title text-dark fw-medium"
+                                        >
+                                            {item.title}
+                                        </Link>
+                                        <span className="text-muted small">{item.createdAt}</span>
+                                    </div>
                                 </div>
-                            </div>
-                            )
-                        })}
+                            ))
+                        )}
                     </div>
                 </div>
-                <div className="mt-4 pt-2 text-center">
-                    <h6 className="pt-2 pb-2 bg-light rounded">Tags Cloud</h6>
-                    <ul className="tagcloud list-unstyled mt-4">
-                        <li className="d-inline-flex m-1"><Link to="#" className="rounded fw-medium text-dark py-1 px-2">Business</Link></li>
-                        <li className="d-inline-flex m-1"><Link to="#" className="rounded fw-medium text-dark py-1 px-2">Finance</Link></li>
-                        <li className="d-inline-flex m-1"><Link to="#" className="rounded fw-medium text-dark py-1 px-2">Marketing</Link></li>
-                        <li className="d-inline-flex m-1"><Link to="#" className="rounded fw-medium text-dark py-1 px-2">Fashion</Link></li>
-                        <li className="d-inline-flex m-1"><Link to="#" className="rounded fw-medium text-dark py-1 px-2">Bride</Link></li>
-                        <li className="d-inline-flex m-1"><Link to="#" className="rounded fw-medium text-dark py-1 px-2">Lifestyle</Link></li>
-                        <li className="d-inline-flex m-1"><Link to="#" className="rounded fw-medium text-dark py-1 px-2">Travel</Link></li>
-                        <li className="d-inline-flex m-1"><Link to="#" className="rounded fw-medium text-dark py-1 px-2">Beauty</Link></li>
-                        <li className="d-inline-flex m-1"><Link to="#" className="rounded fw-medium text-dark py-1 px-2">Video</Link></li>
-                        <li className="d-inline-flex m-1"><Link to="#" className="rounded fw-medium text-dark py-1 px-2">Audio</Link></li>
-                    </ul>
-                </div>
-                
             </div>
         </div>
-    )
+    );
 }

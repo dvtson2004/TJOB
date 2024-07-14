@@ -12,7 +12,7 @@ const DatatableJobSeeker = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-          const response = await fetch('http://localhost:8080/jobSeeker/list');
+        const response = await fetch('http://localhost:8080/jobSeeker/list');
         if (!response.ok) {
           throw new Error('Failed to fetch users');
         }
@@ -28,7 +28,7 @@ const DatatableJobSeeker = () => {
 
     fetchUsers();
   }, []);
-
+  console.log(users);
   const transformData = (data) => {
     return data.map(item => ({
       id: item.jid,  // Assuming 'jid' is the job seeker ID
@@ -38,6 +38,7 @@ const DatatableJobSeeker = () => {
       role: item.user.roleType ? item.user.roleType.roleTypeName : 'Unknown Role',
       is_active: item.user.isActive === 1 ? "Active" : "Inactive", // Check if isActive is 1 or 0
       avatarUrl: `https://avatars.dicebear.com/api/initials/${item.user.user_name}.svg`
+      // avatar_url: item.avatar_url
     }));
   };
 
@@ -46,11 +47,11 @@ const DatatableJobSeeker = () => {
       const response = await fetch(`http://localhost:8080/job-seekers/toggle-active/${id}`, {
         method: 'PATCH',
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to toggle active status');
       }
-  
+
       // Update user's isActive status in the local state
       setUsers(prevUsers =>
         prevUsers.map(user =>
@@ -90,8 +91,8 @@ const DatatableJobSeeker = () => {
                   <Link to={`/users/job-seekers/view/${params.row.id}`} className="viewButton">
                     View
                   </Link>
-                  <button 
-                    className="lockButton" 
+                  <button
+                    className="lockButton"
                     style={{ color: 'black' }} // Inline style for black text color
                     onClick={() => handleToggleActive(params.row.id, params.row.is_active === "Active")}
                   >
