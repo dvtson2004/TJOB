@@ -208,7 +208,7 @@ export default function JobListTwo() {
                                         )
                                     })}
                                 </div>
-                                {/* <div className="mt-4">
+                                <div className="mt-4">
                                     <h6 className="mb-0">Salary</h6>
 
                                     <ul className="list-unstyled mt-2 mb-0">
@@ -239,7 +239,7 @@ export default function JobListTwo() {
                                             </div>
                                         </li>
                                     </ul>
-                                </div> */}
+                                </div>
                                 <div className="mt-4">
                                     <button className="btn btn-primary w-100">Apply Filter</button>
                                 </div>

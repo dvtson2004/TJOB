@@ -123,12 +123,7 @@ const Sidebar = () => {
               <span>   Statistic</span>
             </ul>
           </Link>
-          <Link to="/create-template" style={{ textDecoration: "none" }}>
-            <ul>
-              <AnalyticsIcon className="icon" />
-              <span>   Create Template</span>
-            </ul>
-          </Link>
+
           <li>
             <ExitToAppIcon className="icon" />
             <span onClick={() => {
