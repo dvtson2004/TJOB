@@ -163,7 +163,7 @@ export default function JobListOne() {
                       />
                       <div className="ms-3">
                         <Link
-                          to={`/job-detail-one/${item.id}`}
+                          to={`/job-detail-three/${item.id}`}
                           className="h5 title text-dark"
                         >
                           {item.title}
