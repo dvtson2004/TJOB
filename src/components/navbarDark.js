@@ -331,7 +331,13 @@ export default function NavbarDark() {
                 </Link>
               </li>
             )}
-
+            {enterpriseRole && (
+              <li className={manu === "job-post" ? "active" : ""}>
+                <Link to="/job-list-by-enterprise" className="sub-menu-item">
+                  Your Jobs
+                </Link>
+              </li>
+            )}
             <li
               className={`${[
                 "aboutus",
