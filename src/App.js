@@ -126,7 +126,7 @@ function App() {
           element={<ProtectedRoute element={CandidateProfile} />}
         />
         <Route
-          path="/candidate-profile/:id"
+          path="/candidate-profile/:jid"
           element={<ProtectedRoute element={CandidateProfile} />}
         />
         <Route
