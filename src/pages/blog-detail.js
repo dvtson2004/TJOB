@@ -92,7 +92,7 @@ export default function BlogDetail() {
                                     <Link to="/">Jobnova</Link>
                                 </li>
                                 <li className="breadcrumb-item">
-                                    <Link to="/blogs">Blogs</Link>
+                                    <Link to="/blogss">Blogs</Link>
                                 </li>
                                 <li className="breadcrumb-item active" aria-current="page">
                                     Chi Tiết

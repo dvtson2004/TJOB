@@ -75,6 +75,11 @@ import ListJobPostsModeration from "./pages/list/ListJobPostsModeration";
 import ListEditPackageService from "./pages/list/ListEditPackageService";
 import NewUser from "./pages/newUser/New";
 import JobSeekersTable from "./pages/candidate-applied-list";
+import NewJobSeeker from "./pages/newUser/NewJobSeeker";
+import NewPackage from "./pages/newUser/NewPackage";
+import ListBlog from "./pages/list/ListBlog";
+import ListEditBlog from "./pages/list/ListEditBlog";
+import NewBlog from "./pages/newUser/NewBlog";
 
 function App() {
   return (
@@ -140,7 +145,7 @@ function App() {
         <Route path="/helpcenter-faqs" element={<HelpcenterFaq />} />
         <Route path="/helpcenter-guides" element={<HelpcenterGuides />} />
         <Route path="/helpcenter-support" element={<HelpcenterSupport />} />
-        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogss" element={<Blogs />} />
         <Route path="/blog-sidebar" element={<BlogSidebar />} />
         <Route path="/blog-detail" element={<BlogDetail />} />
         <Route path="/blog-detail/:id" element={<BlogDetail />} />
@@ -149,7 +154,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/lock-screen" element={<LockScreen />} />
         <Route path="/candidate-applied-list" element={<JobSeekersTable />} />
-"
+        "
 
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
@@ -185,18 +190,25 @@ function App() {
             <Route path="view/:id" element={<SingleJobSeeker />} />
             <Route
               path="add"
-              element={<NewUser inputs={userInputs} title="Add New User" />}
+              element={
+                <NewJobSeeker inputs={userInputs} title="Add New User" />
+              }
             />
           </Route>
           <Route path="enterprises">
             <Route index element={<ListEnterprise />} />
             <Route path="view/:id" element={<SingleEnterprise />} />
+            <Route
+              path="add"
+              element={
+                <NewJobSeeker inputs={userInputs} title="Add New User" />
+              }
+            />
           </Route>
           <Route path="admins">
             <Route index element={<ListAdmins />} />
           </Route>
         </Route>
-
         {/* job post */}
         <Route path="jobs">
           <Route path="jobPosts">
@@ -219,6 +231,10 @@ function App() {
         <Route path="packageServices">
           <Route index element={<ListPackageService />} />
           <Route path="edit/:id" element={<ListEditPackageService />} />
+          <Route
+            path="add"
+            element={<NewPackage inputs={userInputs} title="Add New Package" />}
+          />
         </Route>
 
         <Route path="transactions">
@@ -239,6 +255,16 @@ function App() {
           </Route>
         </Route>
 
+        {/* blog */}
+
+        <Route path="blogs">
+          <Route index element={<ListBlog />} />
+          <Route path="edit/:id" element={<ListEditBlog />} />
+          <Route
+            path="add"
+            element={<NewBlog inputs={userInputs} title="Add New Blog" />}
+          />
+        </Route>
         {/* logout */}
         <Route path="/logout">
           <Route index element={<logout />} />

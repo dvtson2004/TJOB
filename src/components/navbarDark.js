@@ -285,16 +285,16 @@ export default function NavbarDark() {
 
             <li
               className={`${[
-                  "job-categories",
-                  "job-grid-two",
-                  "job-list-one",
-                  "job-detail-three",
-                  "job-apply",
-                  "job-post",
-                  "career",
-                ].includes(manu)
-                  ? "active"
-                  : ""
+                "job-categories",
+                "job-grid-two",
+                "job-list-one",
+                "job-detail-three",
+                "job-apply",
+                "job-post",
+                "career",
+              ].includes(manu)
+                ? "active"
+                : ""
                 } has-submenu parent-menu-item`}
             >
               <Link to="#"> Jobs </Link>
@@ -334,16 +334,16 @@ export default function NavbarDark() {
 
             <li
               className={`${[
-                  "aboutus",
-                  "services",
-                  "pricing",
-                  "helpcenter-overview",
-                  "helpcenter-faqs",
-                  "helpcenter-guides",
-                  "helpcenter-support",
-                ].includes(manu)
-                  ? "active"
-                  : ""
+                "aboutus",
+                "services",
+                "pricing",
+                "helpcenter-overview",
+                "helpcenter-faqs",
+                "helpcenter-guides",
+                "helpcenter-support",
+              ].includes(manu)
+                ? "active"
+                : ""
                 } has-submenu parent-menu-item,"blogs", "blog-sidebar","blog-detail","login", "signup","reset-password","lock-screen","terms", "privacy"`}
             >
               <Link to="#">Support</Link>
@@ -367,13 +367,13 @@ export default function NavbarDark() {
 
                 <li
                   className={`${[
-                      "helpcenter-overview",
-                      "helpcenter-faqs",
-                      "helpcenter-guides",
-                      "helpcenter-support",
-                    ].includes(manu)
-                      ? "active"
-                      : ""
+                    "helpcenter-overview",
+                    "helpcenter-faqs",
+                    "helpcenter-guides",
+                    "helpcenter-support",
+                  ].includes(manu)
+                    ? "active"
+                    : ""
                     } has-submenu parent-menu-item`}
                 >
                   <Link to="#"> Helpcenter </Link>
@@ -410,8 +410,8 @@ export default function NavbarDark() {
 
                 <li
                   className={`${["blogs", "blog-sidebar", "blog-detail"].includes(manu)
-                      ? "active"
-                      : ""
+                    ? "active"
+                    : ""
                     } has-submenu parent-menu-item`}
                 >
                   <Link to="#"> Blog </Link>
@@ -439,54 +439,10 @@ export default function NavbarDark() {
                 </li>
               </ul>
             </li>
-            <li
-              className={`${["blogs", "blog-sidebar", "blog-detail"].includes(manu)
-                  ? "active"
-                  : ""
-                } has-submenu parent-menu-item`}
-            >
-              <Link to="#"> Blog </Link>
-              <span className="submenu-arrow"></span>
-              <ul className="submenu">
-                <li className={manu === "blogs" ? "active" : ""}>
-                  <Link to="/blogs" className="sub-menu-item">
-                    {" "}
-                    Blogs
-                  </Link>
-                </li>
-                <li className={manu === "blog-sidebar" ? "active" : ""}>
-                  <Link to="/blog-sidebar" className="sub-menu-item">
-                    {" "}
-                    Blog Sidebar
-                  </Link>
-                </li>
-                <li
-                  className={`${["blogs", "blog-sidebar", "blog-detail"].includes(manu)
-                    ? "active"
-                    : ""
-                    } has-submenu parent-menu-item`}
-                >
-                  <Link to="#"> Blog </Link>
-                  <span className="submenu-arrow"></span>
-                  <ul className="submenu">
-                    <li className={manu === "blogs" ? "active" : ""}>
-                      <Link to="/blogs" className="sub-menu-item">
-                        Blogs
-                      </Link>
-                    </li>
-                    {/* <li className={manu === "blog-sidebar" ? "active" : ""}>
-                  <Link to="/blog-sidebar" className="sub-menu-item">
-                    Blog Sidebar
-                  </Link>
-                </li> */}
-                    <li className={manu === "blog-detail" ? "active" : ""}>
-                      <Link to="/blog-detail" className="sub-menu-item">
-                        Blog Detail
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
+            <li className={manu === "blogs" ? "active" : ""}>
+              <Link to="/blogss" className="sub-menu-item">
+                Blogs
+              </Link>
             </li>
             {jobSeekerRole && (
               <li className={manu === "createCV" ? "active" : ""}>
