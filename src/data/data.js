@@ -286,149 +286,49 @@ export const jobData = [
 ]
 
 export const servicesData = [
-    {
-        icon:FiPhone,
-        title:'24/7 Support',
-        desc:'Many desktop publishing now use and a search for job.'
-    },
-    {
-        icon:FiCpu,
-        title:'Tech & Startup Jobs',
-        desc:'Many desktop publishing now use and a search for job.'
-    },
-    {
-        icon:FiActivity,
-        title:'Quick & Easy',
-        desc:'Many desktop publishing now use and a search for job.'
-    },
-    {
-        icon:FiClock,
-        title:'Save Time',
-        desc:'Many desktop publishing now use and a search for job.'
-    },
-    {
-        icon:FiFileText,
-        title:'Apply with confidence',
-        desc:'Many desktop publishing now use and a search for job.'
-    },
-    {
-        icon:FiCodesandbox,
-        title:'Reduce Hiring Bias',
-        desc:'Many desktop publishing now use and a search for job.'
-    },
-    {
-        icon:FiUsers,
-        title:'Proactive Employers',
-        desc:'Many desktop publishing now use and a search for job.'
-    },
-    {
-        icon:FiUser,
-        title:'Proactive Employers',
-        desc:'Many desktop publishing now use and a search for job.'
-    },
-]
+  {
+    icon: FiPhone,
+    title: "24/7 Support",
+    desc: "Always have a team support for your sistuation.",
+  },
+  {
+    icon: FiCpu,
+    title: "Tech & Startup Jobs",
+    desc: "Verify your Company quickly with online.",
+  },
+  {
+    icon: FiActivity,
+    title: "Quick & Easy",
+    desc: "Quickly find the job that suits you .",
+  },
+  {
+    icon: FiClock,
+    title: "Save Time",
+    desc: "Searching clearly and quickly also detail.",
+  },
+  {
+    icon: FiFileText,
+    title: "Apply with confidence",
+    desc: "Many desktop publishing now use and a search for job.",
+  },
+  {
+    icon: FiCodesandbox,
+    title: "Reduce Hiring Bias",
+    desc: "Many desktop publishing now use and a search for job.",
+  },
+  {
+    icon: FiUsers,
+    title: "Proactive Employers",
+    desc: "Many desktop publishing now use and a search for job.",
+  },
+  {
+    icon: FiUser,
+    title: "Proactive Employers",
+    desc: "Many desktop publishing now use and a search for job.",
+  },
+];
 
-export const blogData = [
-    {
-      id:1,
-      image:blog1,
-      title:'11 Tips to Help You Get New Clients Through Cold Calling',
-      date:'13th Sep 2023',
-      time:'5 min read',
-      tag:'Arts',
-      company:'Google'
-    },
-    {
-        id:2,
-        image:blog2,
-        title:'DigitalOcean launches first Canadian data centre in Toronto',
-        date:'29th Nov 2023',
-        time:'5 min read',
-        tag:'Illustration',
-        company:'Facebook'
-      },
-      {
-        id:3,
-        image:blog3,
-        title:'Using Banner Stands To Increase Trade Show Traffic',
-        date:'29th Dec 2023',
-        time:'5 min read',
-        tag:'Music',
-        company:'Linkedin'
-      },
-      {
-        id:4,
-        image:blog4,
-        title:'11 Tips to Help You Get New Clients Through Cold Calling',
-        date:'13th March 2023',
-        time:'5 min read',
-        tag:'Arts',
-        company:'Google'
-      },
-      {
-        id:5,
-        image:blog5,
-        title:'DigitalOcean launches first Canadian data centre in Toronto',
-        date:'5th May 2023',
-        time:'5 min read',
-        tag:'Illustration',
-        company:'Facebook'
-      },
-      {
-        id:6,
-        image:blog6,
-        title:'Using Banner Stands To Increase Trade Show Traffic',
-        date:'19th June 2023',
-        time:'5 min read',
-        tag:'Music',
-        company:'Linkedin'
-      },
-      {
-        id:7,
-        image:blog7,
-        title:'11 Tips to Help You Get New Clients Through Cold Calling',
-        date:'20th June 2023',
-        time:'5 min read',
-        tag:'Arts',
-        company:'Google'
-      },
-      {
-        id:8,
-        image:blog8,
-        title:'DigitalOcean launches first Canadian data centre in Toronto',
-        date:'31st Aug 2023',
-        time:'5 min read',
-        tag:'Illustration',
-        company:'Facebook'
-      },
-      {
-        id:9,
-        image:blog9,
-        title:'Using Banner Stands To Increase Trade Show Traffic',
-        date:'1st Sep 2024',
-        time:'5 min read',
-        tag:'Music',
-        company:'Linkedin'
-      },
-]
 
-export const recentBlog = [
-    {
-        image:blog1,
-        title:'Consultant Business',
-        date:'13th March 2023'
-    },
-    {
-        image:blog2,
-        title:'Grow Your Business',
-        date:'5th May 2023'
-    },
-    {
-        image:blog1,
-        title:'Look On The Glorious Balance',
-        date:'19th June 2023'
-    },
-]
 
 export const servicesTwo =[
     {
@@ -456,49 +356,90 @@ export const servicesTwo =[
         title:'Digital Marketing'
     },
 ]
+export const blogData = [
+  {
+    id: 1,
+    image: blog1,
+    title: "11 Tips to Help You Get New Clients Through Cold Calling",
+    date: "13th Sep 2023",
+    time: "5 min read",
+    tag: "Arts",
+    company: "Google",
+  },
+  {
+    id: 2,
+    image: blog2,
+    title: "DigitalOcean launches first Canadian data centre in Toronto",
+    date: "29th Nov 2023",
+    time: "5 min read",
+    tag: "Illustration",
+    company: "Facebook",
+  },
+  {
+    id: 3,
+    image: blog3,
+    title: "Using Banner Stands To Increase Trade Show Traffic",
+    date: "29th Dec 2023",
+    time: "5 min read",
+    tag: "Music",
+    company: "Linkedin",
+  },
+  {
+    id: 4,
+    image: blog4,
+    title: "11 Tips to Help You Get New Clients Through Cold Calling",
+    date: "13th March 2023",
+    time: "5 min read",
+    tag: "Arts",
+    company: "Google",
+  },
+  {
+    id: 5,
+    image: blog5,
+    title: "DigitalOcean launches first Canadian data centre in Toronto",
+    date: "5th May 2023",
+    time: "5 min read",
+    tag: "Illustration",
+    company: "Facebook",
+  },
+  {
+    id: 6,
+    image: blog6,
+    title: "Using Banner Stands To Increase Trade Show Traffic",
+    date: "19th June 2023",
+    time: "5 min read",
+    tag: "Music",
+    company: "Linkedin",
+  },
+  {
+    id: 7,
+    image: blog7,
+    title: "11 Tips to Help You Get New Clients Through Cold Calling",
+    date: "20th June 2023",
+    time: "5 min read",
+    tag: "Arts",
+    company: "Google",
+  },
+  {
+    id: 8,
+    image: blog8,
+    title: "DigitalOcean launches first Canadian data centre in Toronto",
+    date: "31st Aug 2023",
+    time: "5 min read",
+    tag: "Illustration",
+    company: "Facebook",
+  },
+  {
+    id: 9,
+    image: blog9,
+    title: "Using Banner Stands To Increase Trade Show Traffic",
+    date: "1st Sep 2024",
+    time: "5 min read",
+    tag: "Music",
+    company: "Linkedin",
+  },
+];
 
-export const categoriesTwoData = [
-    {
-        title:'Human Resource',
-        job:'90 Jobs Available'
-    },
-    {
-        title:'It & Networking',
-        job:'90 Jobs Available'
-    },
-    {
-        title:'Sales & Marketing',
-        job:'90 Jobs Available'
-    },
-    {
-        title:'Accounting',
-        job:'90 Jobs Available'
-    },
-    {
-        title:'Delivery Boy',
-        job:'90 Jobs Available'
-    },
-    {
-        title:'Data Science',
-        job:'90 Jobs Available'
-    },
-    {
-        title:'Project Manager',
-        job:'90 Jobs Available'
-    },
-    {
-        title:'Engineering',
-        job:'90 Jobs Available'
-    },
-    {
-        title:'Help Center',
-        job:'90 Jobs Available'
-    },
-    {
-        title:'Full Stack Developer',
-        job:'90 Jobs Available'
-    },
-]
 
 export const accordionData = [
     {
@@ -506,7 +447,7 @@ export const accordionData = [
         desc:'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.'
     },
     {
-        title:'Do I need a designer to use Jobnova ?',
+        title:'Do I need a designer to use TopJob ?',
         desc:'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.'
     },
     {
@@ -673,27 +614,32 @@ export const candidateSkill = [
 ]
 
 export const teamData = [
-    {
-        image:team1,
-        name:'Jack John',
-        title:'Job Seeker'
-    },
-    {
-        image:team2,
-        name:'Krista John',
-        title:'Job Seeker'
-    },
-    {
-        image:team3,
-        name:'Roger Jackson',
-        title:'Job Seeker'
-    },
-    {
-        image:team4,
-        name:'Johnny English',
-        title:'Job Seeker'
-    },
-]
+  {
+    image: team1,
+    name: "Vo Quy Hoang Long",
+    title: "Developer",
+  },
+  {
+    image: team2,
+    name: "Le Trung Truc",
+    title: "Developer",
+  },
+  {
+    image: team3,
+    name: "Dinh Van Thai Son",
+    title: "Developer",
+  },
+  {
+    image: team4,
+    name: "Pham Le Tien Vu",
+    title: "Developer",
+  },
+  {
+    image: team5,
+    name: "Nguyen Anh Vu",
+    title: "Developer",
+  },
+];
 export const helpcenterData = [
     {
         icon:FiHelpCircle,
@@ -742,19 +688,19 @@ export const contactData = [
     {
         icon:FiPhone,
         title:'Phone',
-        desc:'Start working with Jobnova that can provide everything',
+        desc:'Start working with TopJob that can provide everything',
         link:'tel:+152534-468-854'
     },
     {
         icon:FiMail,
         title:'Email',
-        desc:'Start working with Jobnova that can provide everything',
+        desc:'Start working with TopJob that can provide everything',
         link:'contact@example.com'
     },
     {
         icon:FiMapPin,
         title:'Location',
-        desc:'Start working with Jobnova that can provide everything',
+        desc:'Start working with TopJob that can provide everything',
         link:'View on Google map'
     },
 ]

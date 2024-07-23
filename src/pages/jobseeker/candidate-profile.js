@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import bg1 from "../assets/images/hero/bg5.jpg";
-import company1 from "../assets/images/company/linkedin.png";
-import company2 from "../assets/images/company/lenovo-logo.png";
-import NavbarDark from "../components/navbarDark";
-import Footer from "../components/footer";
-import ScrollTop from "../components/scrollTop";
-import { candidateSkill, candidatesData } from "../data/data";
+import bg1 from "../../assets/images/hero/bg5.jpg";
+import company1 from "../../assets/images/company/linkedin.png";
+import company2 from "../../assets/images/company/lenovo-logo.png";
+import NavbarDark from "../../components/navbarDark";
+import Footer from "../../components/footer";
+import ScrollTop from "../../components/scrollTop";
+import { candidateSkill, candidatesData } from "../../data/data";
 import {
   FiSettings,
   FiMail,
@@ -23,14 +23,14 @@ import {
   FiMessageCircle,
   FiFileText,
   FiGift,
-} from "../assets/icons/vander";
+} from "../../assets/icons/vander";
 import jsPDF from "jspdf";
 
-import useJobSeekerInfo from "../hook/useJobSeekerInfo";
+import useJobSeekerInfo from "../../hook/useJobSeekerInfo";
 
 import "react-toastify/dist/ReactToastify.css";
 
-import { ContactUs } from "../components/contact";
+import { ContactUs } from "../../components/contact";
 
 export default function CandidateProfile() {
   const { jid } = useParams();
@@ -95,10 +95,10 @@ export default function CandidateProfile() {
 
               <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
 
-              <h5 className="mt-4">Skills:</h5>
+              {/* <h5 className="mt-4">Skills:</h5> */}
 
               <div className="row">
-                <div className="col-lg-6 col-12">
+                {/* <div className="col-lg-6 col-12">
                   {candidateSkill.slice(0, 3).map((item, index) => {
                     return (
                       <div className="progress-box mt-4" key={index}>
@@ -116,9 +116,9 @@ export default function CandidateProfile() {
                       </div>
                     );
                   })}
-                </div>
+                </div> */}
 
-                <div className="col-lg-6 col-12">
+                {/* <div className="col-lg-6 col-12">
                   {candidateSkill.slice(3, 6).map((item, index) => {
                     return (
                       <div className="progress-box mt-4" key={index}>
@@ -136,7 +136,7 @@ export default function CandidateProfile() {
                       </div>
                     );
                   })}
-                </div>
+                </div> */}
               </div>
 
               <div className="p-4 rounded shadow mt-4">
@@ -157,6 +157,16 @@ export default function CandidateProfile() {
                       {user && user.user_name === "Johny Sins"
                         ? "johnysins@gmail.com"
                         : user?.user.email}
+                    </span>
+                  </div>
+
+                  <div className="d-flex align-items-center justify-content-between mt-3">
+                    <span className="d-inline-flex align-items-center text-muted fw-medium">
+                      <FiGift className="fea icon-sm me-2" /> Your Money:
+                    </span>
+
+                    <span className="fw-medium">
+                      ${user?.user.account_balance ?? 0}
                     </span>
                   </div>
 
@@ -250,14 +260,15 @@ export default function CandidateProfile() {
                   <div className="p-3 rounded shadow bg-white mt-2">
                     <div className="d-flex align-items-center mb-2">
                       <FiFileText className="fea icon-md" />
-                      <h6 className="mb-0 ms-2">user?.resume_url</h6>
+                      <h6 className="mb-0 ms-2">Download Resume Now</h6>
                     </div>
 
                     <button
                       className="btn btn-primary w-100"
                       onClick={handleDownload}
                     >
-                      <FiDownload className="fea icon-sm me-1" /> Download CV
+                      <FiDownload className="fea icon-sm me-1" /> Download
+                      Resume
                     </button>
                   </div>
                 </div>
@@ -266,7 +277,7 @@ export default function CandidateProfile() {
           </div>
         </div>
 
-        <div className="container mt-100 mt-60">
+        {/* <div className="container mt-100 mt-60">
           <div className="row justify-content-center mb-4 pb-2">
             <div className="col-12">
               <div className="section-title text-center">
@@ -356,7 +367,7 @@ export default function CandidateProfile() {
               );
             })}
           </div>
-        </div>
+        </div> */}
       </section>
       <Footer top={true} />
       <ScrollTop />

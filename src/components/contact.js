@@ -1,8 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import useJobSeekerInfo from "../hook/useJobSeekerInfo";
+import useEnterpriseInfo from "../hook/useEnterpriseInfo";
 export const ContactUs = () => {
   const { jid } = useParams();
+  const { data: enterpriseData } = useEnterpriseInfo();
+  const enterprise = enterpriseData?.data;
+  const { data: jobSeekerData } = useJobSeekerInfo();
+  const jobSeeker = jobSeekerData?.data;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -13,6 +19,8 @@ export const ContactUs = () => {
   });
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [lastSentTime, setLastSentTime] = useState(null);
+  const COOL_DOWN_TIME = 10 * 60 * 1000;
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -22,8 +30,22 @@ export const ContactUs = () => {
     }));
   };
 
+  useEffect(() => {
+    const storedLastSentTime = sessionStorage.getItem("lastSentTime");
+    if (storedLastSentTime) {
+      setLastSentTime(storedLastSentTime);
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // const now = new Date();
+    // if (lastSentTime && now - new Date(lastSentTime) < COOL_DOWN_TIME) {
+    //   setErrorMessage("You can only send one message every 10 minutes");
+    //   return;
+    // }
+
     const data = new FormData();
     for (let key in formData) {
       if (formData[key]) {
@@ -39,12 +61,13 @@ export const ContactUs = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:8080/jobSeeker/send/${jid}`,
+        `https://topjob-backend-5219ff13ed0d.herokuapp.com//jobSeeker/send/${jid}`,
         data
       );
       if (response.status === 200) {
         setIsSuccess(true);
         setErrorMessage("");
+        sessionStorage.setItem("lastSentTime", new Date());
       }
     } catch (error) {
       setIsSuccess(false);
@@ -73,9 +96,18 @@ export const ContactUs = () => {
                   type="text"
                   className="form-control"
                   placeholder="Name"
-                  value={formData.name}
+                  value={
+                    enterprise
+                      ? (formData.name = enterprise?.name)
+                      : jobSeeker
+                        ? (formData.name =
+                          jobSeeker?.first_name + " " + jobSeeker?.last_name)
+                        : formData.name
+                  }
                   onChange={handleChange}
                   required
+                  disabled
+                  readOnly
                 />
               </div>
             </div>
@@ -91,9 +123,17 @@ export const ContactUs = () => {
                   placeholder="Email"
                   id="email"
                   name="email"
-                  value={formData.to}
+                  value={
+                    enterprise
+                      ? (formData.email = enterprise?.user.email)
+                      : jobSeeker
+                        ? (formData.email = jobSeeker?.user.email)
+                        : formData.email
+                  }
                   onChange={handleChange}
                   required
+                  readOnly
+                  disabled
                 />
               </div>
             </div>

@@ -10,6 +10,7 @@ import useTemplateDetails from '../../hook/useTemplateDetails.js';
 import NavbarDark from '../../components/navbarDark';
 import Footer from '../../components/footer';
 import ScrollTop from '../../components/scrollTop';
+import bg1 from "../../assets/images/hero/bg4.jpg"
 const TemplateDesignPinDetail = () => {
     const { templateID } = useParams();
     const { data, isError, isLoading } = useTemplateDetails(templateID);
@@ -70,7 +71,7 @@ const TemplateDesignPinDetail = () => {
                         </div>
                         {/* right section */}
                         <div className='tw-col-span-1 lg:tw-col-span-4 tw-w-full tw-flex tw-flex-col tw-items-center tw-justify-start tw-px-3 tw-gap-6'>
-                            <div className='tw-w-full tw-h-72 tw-bg-blue-200 tw-rounded-md tw-oveflow-hidder tw-relative' style={{ background: "url(https://raw.githubusercontent.com/longvoquy/bg/main/vscode-bg.jpg)", backgroundPosition: "center", backdropSize: "cover" }}>
+                            <div className='tw-w-full tw-h-72 tw-bg-blue-200 tw-rounded-md tw-oveflow-hidder tw-relative' style={{ backgroundImage: `url(${bg1})`, backgroundPosition: "center", backdropSize: "cover" }}>
                                 {/* discover more option  */}
                                 <div className='tw-absolute tw-inset-0 tw-flex tw-items-center tw-justify-center tw-bg-[rbga(0,0,0,4)]'>
                                     <Link to="/template" className='tw-px-4 tw-py-2 tw-rounded-md tw-border-gray-200 tw-text-white'>
@@ -78,14 +79,14 @@ const TemplateDesignPinDetail = () => {
                                     </Link>
                                 </div>
                             </div>
-                                    
+
                             {/* edit the template option  */}
                             <Link
                                 className='tw-w-full tw-px-4 tw-py-3 tw-rounded-md tw-flex tw-items-center tw-justify-center tw-bg-blue-500 tw-cursor-pointer'
                                 to={`/resume/${data?.name}?templateId=${templateID}`} >
-                                <p className='tw-text-white tw-font-semibold tw-text-lg'> Edit this template </p>
+                                <p className='tw-text-white tw-font-semibold tw-text-lg' name="edit-template"> Edit this template </p>
                             </Link>
-                                    
+
                             {/* tags */}
                             <div className='tw-w-full tw-flex tw-items-center tw-justify-start tw-flex-warp tw-gap-2'>
                                 {data?.tag?.map((tag, index) => (

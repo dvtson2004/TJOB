@@ -29,7 +29,7 @@ export default function AboutUs(){
                 <div className="position-middle-bottom">
                     <nav aria-label="breadcrumb" className="d-block">
                         <ul className="breadcrumb breadcrumb-muted mb-0 p-0">
-                            <li className="breadcrumb-item"><Link to="/">Jobnova</Link></li>
+                            <li className="breadcrumb-item"><Link to="/">TopJob</Link></li>
                             <li className="breadcrumb-item active" aria-current="page">Về Chúng Tôi</li>
                         </ul>
                     </nav>
@@ -51,8 +51,8 @@ export default function AboutUs(){
                 <div className="row justify-content-center mb-4 pb-2">
                     <div className="col-12">
                         <div className="section-title text-center">
-                            <h4 className="title mb-3">Tại sao bạn sẽ yêu thích Jobnova</h4>
-                            <p className="text-muted para-desc mx-auto mb-0">Tìm kiếm tất cả các vị trí mở trên web. Nhận ước tính lương cá nhân của bạn. Đọc đánh giá về hơn 30.000+ công ty trên toàn thế giới.</p>
+                            <h4 className="title mb-3">Tại sao bạn sẽ yêu thích TopJob</h4>
+                            <p className="text-muted para-desc mx-auto mb-0">Tìm kiếm tất cả các vị trí mở trên web. Nhận ước tính lương cá nhân của bạn. Đọc đánh giá về các công ty.</p>
                         </div>
                     </div>
                 </div>
@@ -70,9 +70,9 @@ export default function AboutUs(){
                                 <div className="mt-4">
                                     <Link to="" className="title h5 text-dark">{item.title}</Link>
                                     <p className="text-muted mt-3 mb-0">{item.desc}</p>
-                                    <div className="mt-3">
+                                    {/* <div className="mt-3">
                                         <Link to="" className="btn btn-link primary text-dark">Đọc Thêm <i className="mdi mdi-arrow-right"></i></Link>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,7 @@ export default function AboutUs(){
                     <div className="col">
                         <div className="section-title text-center mb-4 pb-2">
                             <h4 className="title mb-3">Đội Ngũ Của Chúng Tôi</h4>
-                            <p className="text-muted para-desc mb-0 mx-auto">Tìm kiếm tất cả các vị trí mở trên web. Nhận ước tính lương cá nhân của bạn. Đọc đánh giá về hơn 30.000+ công ty trên toàn thế giới.</p>
+                            <p className="text-muted para-desc mb-0 mx-auto">Tìm kiếm tất cả các vị trí mở trên web. Nhận ước tính lương cá nhân của bạn. Đọc đánh giá về các công ty.</p>
                         </div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@ export default function AboutUs(){
                     <div className="col">
                         <div className="section-title text-center mb-4 pb-2">
                             <h4 className="title mb-3">Câu Hỏi & Trả Lời</h4>
-                            <p className="text-muted para-desc mb-0 mx-auto">Tìm kiếm tất cả các vị trí mở trên web. Nhận ước tính lương cá nhân của bạn. Đọc đánh giá về hơn 30.000+ công ty trên toàn thế giới.</p>
+                            <p className="text-muted para-desc mb-0 mx-auto">Tìm kiếm tất cả các vị trí mở trên web. Nhận ước tính lương cá nhân của bạn. Đọc đánh giá về các công ty.</p>
                         </div>
                     </div>
                 </div>
@@ -133,7 +133,7 @@ export default function AboutUs(){
                         <div className="d-flex">
                             <FiHelpCircle className="fea icon-ex-md text-primary me-2 mt-1"/>
                             <div className="flex-1">
-                                <h5 className="mt-0">Jobnova của chúng tôi hoạt động như thế nào?</h5>
+                                <h5 className="mt-0">TobJob của chúng tôi hoạt động như thế nào?</h5>
                                 <p className="answer text-muted mb-0">Do việc sử dụng phổ biến văn bản làm văn bản mẫu cho bố cục, tính không đọc được rất quan trọng: nhận thức của con người được điều chỉnh để nhận ra các mẫu và sự lặp lại nhất định trong văn bản.</p>
                             </div>
                         </div>
@@ -144,7 +144,7 @@ export default function AboutUs(){
                             <FiHelpCircle className="fea icon-ex-md text-primary me-2 mt-1"/>
                             <div className="flex-1">
                                 <h5 className="mt-0">Quá trình chính để mở tài khoản là gì?</h5>
-                                <p className="answer text-muted mb-0">Nếu sự phân phối các chữ cái và 'từ' là ngẫu nhiên, người đọc sẽ không bị phân tâm khỏi việc đưa ra phán đoán trung lập về tác động trực quan</p>
+                                <p className="answer text-muted mb-0">Hãy nhập nhưng phần điền cần thiết là bạn có thể tạo 1 tài khoản thành công.</p>
                             </div>
                         </div>
                     </div>
@@ -154,7 +154,7 @@ export default function AboutUs(){
                             <FiHelpCircle className="fea icon-ex-md text-primary me-2 mt-1"/>
                             <div className="flex-1">
                                 <h5 className="mt-0">Làm thế nào để nhập dữ liệu không giới hạn?</h5>
-                                <p className="answer text-muted mb-0">Hơn nữa, nó có lợi khi văn bản giả tương đối thực tế để ấn tượng bố cục của ấn phẩm cuối cùng không bị ảnh hưởng.</p>
+                                <p className="answer text-muted mb-0">Bạn có thể đăng cái ảnh đê làm tăng sự phong phú cho profile của bạn.</p>
                             </div>
                         </div>
                     </div>
@@ -163,8 +163,8 @@ export default function AboutUs(){
                         <div className="d-flex">
                             <FiHelpCircle className="fea icon-ex-md text-primary me-2 mt-1"/>
                             <div className="flex-1">
-                                <h5 className="mt-0">Jobnova có an toàn khi sử dụng với tài khoản của tôi không?</h5>
-                                <p className="answer text-muted mb-0">Văn bản giả nổi tiếng nhất là 'Lorem Ipsum', được cho là xuất hiện vào thế kỷ 16. Lorem Ipsum được viết bằng ngôn ngữ giả Latinh mà phần lớn tương ứng với tiếng Latinh 'đúng'.</p>
+                                <h5 className="mt-0">TopJob có an toàn khi sử dụng với tài khoản của tôi không?</h5>
+                                <p className="answer text-muted mb-0">Chúng tôi cam kết đảm bảo an toàn tài khoản của bạn khi sử dụng công nghệ để đảm bảo tài khoản của bạn.</p>
                             </div>
                         </div>
                     </div>
@@ -174,7 +174,7 @@ export default function AboutUs(){
                     <div className="col-12 text-center">
                         <div className="section-title">
                             <h4 className="title mb-4">Có Câu Hỏi? Liên hệ với chúng tôi!</h4>
-                            <p className="text-muted para-desc mx-auto">Bắt đầu làm việc với <span className="text-primary fw-bold">Jobnova</span> có thể cung cấp mọi thứ bạn cần để tạo ra sự nhận thức, thu hút lưu lượng truy cập, kết nối.</p>
+                            <p className="text-muted para-desc mx-auto">Bắt đầu làm việc với <span className="text-primary fw-bold">TopJob</span> có thể cung cấp mọi thứ bạn cần để tạo ra công việc, thu hút lưu lượng truy cập, kết nối nhiều người.</p>
                             <Link to="/contactus" className="btn btn-primary mt-3"><i className="uil uil-phone"></i> Liên hệ chúng tôi</Link>
                         </div>
                     </div>

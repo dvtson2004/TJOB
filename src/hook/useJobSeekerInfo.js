@@ -19,7 +19,10 @@ const useJobSeekerInfo = (jid) => {
     retry: 1,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 60000),
     onError: (error) => {
-      console.error("Lỗi khi lấy thông tin người tìm việc:", error);
+      // Kiểm tra lỗi và điều kiện để không in log cho một số lỗi nhất định
+      if (error.response && error.response.status !== 400) {
+        console.error("Lỗi khi lấy thông tin ứng viên:", error);
+      }
       if (error.response && error.response.status === 400) {
         window.location.replace("login");
       }

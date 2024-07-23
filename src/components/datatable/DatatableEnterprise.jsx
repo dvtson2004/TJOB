@@ -12,7 +12,7 @@ const DatatableEnterprise = () => {
     useEffect(() => {
         const fetchEnterprises = async () => {
             try {
-                const response = await fetch('http://localhost:8080/enterprises/list');
+                const response = await fetch('https://topjob-backend-5219ff13ed0d.herokuapp.com//enterprises/list');
                 if (!response.ok) {
                     throw new Error('Failed to fetch enterprises');
                 }
@@ -38,13 +38,13 @@ const DatatableEnterprise = () => {
             created_at: new Date(item.created_at).toLocaleDateString(),  // Format date
             role: item.user.roleType ? item.user.roleType.roleTypeName : 'Unknown Role',
             is_active: item.user.isActive === 1 ? "Active" : "Inactive", // Check if isActive is 1 or 0
-            avatarUrl: `https://avatars.dicebear.com/api/initials/${item.enterprise_name}.svg`
+            // avatarUrl: `https://avatars.dicebear.com/api/initials/${item.avatar_url}.svg`
         }));
     };
 
     const handleToggleActive = async (id, currentIsActive) => {
         try {
-            const response = await fetch(`http://localhost:8080/enterprises/toggle-active/${id}`, {
+            const response = await fetch(`https://topjob-backend-5219ff13ed0d.herokuapp.com//enterprises/toggle-active/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

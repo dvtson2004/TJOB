@@ -18,6 +18,7 @@ import useJobInfo from "../hook/useJobInfo";
 import { toast } from "react-toastify";
 export default function JobDetailThree() {
     let { id } = useParams();
+    
     const { data: jobData, isLoading, error } = useJobInfo();
     const [isJobSeeker, setIsJobSeeker] = useState(sessionStorage.getItem("roleJobSeeker"));
 
@@ -45,7 +46,7 @@ export default function JobDetailThree() {
         // Redirect to apply page with job data
         window.location.href = `/job-apply/${id}`; // Uncomment this line to redirect to apply page
     };
-
+    console.log(data?.enterprise?.eid)
     return (
         <>
             <NavbarDark />
@@ -54,11 +55,18 @@ export default function JobDetailThree() {
                     <div className="row g-4">
                         <div className="col-lg-4 col-md-6">
                             <div className="card border-0 shadow rounded p-4 sticky-bar">
-                                <img
-                                    src={data?.avatarUrl}
-                                    className="avatar avatar-medium p-4 rounded-pill shadow bg-white"
-                                    alt=""
-                                />
+                                {/* <img
+                                        src={data?.enterprise?.avatar_url}
+                                        className="avatar avatar-medium p-4 rounded-pill shadow bg-white"
+                                        alt=""
+                                    /> */}
+                                <Link to={`/employer-profile/${data?.enterprise.eid}`}>
+                                    <img
+                                        src={data?.enterprise?.avatar_url}  
+                                        className="avatar avatar-medium p-4 rounded-pill shadow bg-white"
+                                        alt=""
+                                    />
+                                </Link>
 
                                 <div className="mt-4">
                                     <h4 className="title mb-3">{data?.title}</h4>
@@ -175,21 +183,7 @@ export default function JobDetailThree() {
                             <div className="mt-4">
                                 <h5>Job Description: </h5>
                                 <p className="text-muted">
-                                    One disadvantage of Lorum Ipsum is that in Latin certain
-                                    letters appear more frequently than others - which creates a
-                                    distinct visual impression. Moreover, in Latin only words at
-                                    the beginning of sentences are capitalized.
-                                </p>
-                                <p className="text-muted">
-                                    This means that Lorem Ipsum cannot accurately represent, for
-                                    example, German, in which all nouns are capitalized. Thus,
-                                    Lorem Ipsum has only limited suitability as a visual filler
-                                    for German texts. If the fill text is intended to illustrate
-                                    the characteristics of different typefaces.
-                                </p>
-                                <p className="text-muted">
-                                    It sometimes makes sense to select texts containing the
-                                    various letters and symbols specific to the output language.
+                                    {data?.description}
                                 </p>
 
                                 <h5 className="mt-4">Responsibilities and Duties: </h5>

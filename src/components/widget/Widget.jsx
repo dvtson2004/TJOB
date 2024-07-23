@@ -1,7 +1,6 @@
 import "./widget.scss";
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import ExtensionIcon from '@mui/icons-material/Extension';
 import WorkIcon from '@mui/icons-material/Work';
@@ -19,7 +18,7 @@ const Widget = ({ type }) => {
 
   useEffect(() => {
     if (type === "user") {
-      axios.get("http://localhost:8080/totalUsers")
+      axios.get("https://topjob-backend-5219ff13ed0d.herokuapp.com//totalUsers")
         .then(response => {
           setTotalUsers(response.data);
           setIsLoading(false);
@@ -30,7 +29,7 @@ const Widget = ({ type }) => {
           setIsLoading(false);
         });
     } else if (type === "postjob") {
-      axios.get("http://localhost:8080/jobs/totalJob")
+      axios.get("https://topjob-backend-5219ff13ed0d.herokuapp.com//jobs/totalJob")
         .then(response => {
           setTotalJobs(response.data);
           setIsLoading(false);
@@ -41,13 +40,13 @@ const Widget = ({ type }) => {
           setIsLoading(false);
         });
     } else if (type === "earning") {
-      axios.get("http://localhost:8080/packageServices/totalPackageService")
+      axios.get("https://topjob-backend-5219ff13ed0d.herokuapp.com//blogs/totalBlog")
         .then(response => {
           setTotalPackageServices(response.data);
           setIsLoading(false);
         })
         .catch(error => {
-          console.error("There was an error fetching the total package services!", error);
+          console.error("There was an error fetching the total blog!", error);
           setError(error);
           setIsLoading(false);
         });
@@ -55,7 +54,6 @@ const Widget = ({ type }) => {
   }, [type]);
 
   const amount = type === "user" ? totalUsers : (type === "postjob" ? totalJobs : totalPackageServices); // Adjusted to include totalPackageServices
-  const diff = 20;
 
   switch (type) {
     case "user":
@@ -92,9 +90,9 @@ const Widget = ({ type }) => {
       break;
     case "earning":
       data = {
-        title: "Package Services",
-        link: "View all package services",
-        linkAddress: "/packageServices",
+        title: "Blog",
+        link: "View all Blog",
+        linkAddress: "/blogs",
         icon: (
           <ExtensionIcon
             className="icon"
@@ -120,10 +118,6 @@ const Widget = ({ type }) => {
         </span>
       </div>
       <div className="right">
-        <div className="percentage positive">
-          <KeyboardArrowUpIcon />
-          {diff} %
-        </div>
         {data.icon}
       </div>
       {error && <div className="error">Error: {error.message}</div>}

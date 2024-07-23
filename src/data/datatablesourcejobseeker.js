@@ -1,19 +1,7 @@
 export const userColumns = [
     { field: "id", headerName: "ID", width: 70 },
 
-    {
-        field: "avatarUrl",
-        headerName: "Avatar",
-        width: 110,
-        renderCell: (params) => {
-            return (
-                <div className="cellWithImg">
-                    <img className="cellImg" src={params.row.avatarUrl} alt="avatar" />
-                    {params.row.username}
-                </div>
-            );
-        },
-    },
+
     {
         field: "user_name",
         headerName: "User Name",

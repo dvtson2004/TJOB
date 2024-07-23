@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import bg1 from '../../assets/images/hero/bg3.jpg'
-import logo from '../../assets/images/logo-dark.png'
+import logo from '../../assets/images/logo2/logo-dark.png'
 import api from '../../api/http'
 import '../../assets/css/eyes.css'
 export default function Login() {
@@ -35,9 +35,17 @@ export default function Login() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
+        const email = formData.get('email');
+        const password = formData.get('password');
+
+        if (!email || !password) {
+            toast.error('Email and Password cannot be blank');
+            return;
+        }
+
         const data = {
-            email: formData.get('email'),
-            password: formData.get('password'),
+            email: email,
+            password: password,
         };
 
         onfinish(data);

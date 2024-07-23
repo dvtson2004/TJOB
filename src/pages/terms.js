@@ -29,7 +29,7 @@ export default function Terms(){
                 <div className="position-middle-bottom">
                     <nav aria-label="breadcrumb" className="d-block">
                         <ul className="breadcrumb breadcrumb-muted mb-0 p-0">
-                            <li className="breadcrumb-item"><Link to="/">Jobnova</Link></li>
+                            <li className="breadcrumb-item"><Link to="/">TopJob</Link></li>
                             <li className="breadcrumb-item active" aria-current="page">T&C</li>
                         </ul>
                     </nav>

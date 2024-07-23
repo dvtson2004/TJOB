@@ -12,7 +12,7 @@ const DatatableJobSeeker = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch('http://localhost:8080/jobSeeker/list');
+        const response = await fetch('https://topjob-backend-5219ff13ed0d.herokuapp.com//jobSeeker/list');
         if (!response.ok) {
           throw new Error('Failed to fetch users');
         }
@@ -37,14 +37,14 @@ const DatatableJobSeeker = () => {
       created_at: new Date(item.user.created_at).toLocaleDateString(),  // Format date
       role: item.user.roleType ? item.user.roleType.roleTypeName : 'Unknown Role',
       is_active: item.user.isActive === 1 ? "Active" : "Inactive", // Check if isActive is 1 or 0
-      avatarUrl: `https://avatars.dicebear.com/api/initials/${item.user.user_name}.svg`
+      // avatarUrl: `https://avatars.dicebear.com/api/initials/${item.user.user_name}.svg`
       // avatar_url: item.avatar_url
     }));
   };
 
   const handleToggleActive = async (id, currentIsActive) => {
     try {
-      const response = await fetch(`http://localhost:8080/job-seekers/toggle-active/${id}`, {
+      const response = await fetch(`https://topjob-backend-5219ff13ed0d.herokuapp.com//job-seekers/toggle-active/${id}`, {
         method: 'PATCH',
       });
 

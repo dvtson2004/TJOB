@@ -1,43 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiBriefcase, FiMapPin, FiSearch } from "../assets/icons/vander";
 import ToggleSelect from "./ToggleSelect";
+import { State } from "country-state-city"; // Import the State module from the library
+import api from "../api/http"; // Import your api instance
 
 export default function FormSelect({ onSearch }) {
     const [keyword, setKeyword] = useState('');
     const [selectedLocation, setSelectedLocation] = useState(null);
-    const [selectedType, setSelectedType] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [jobCategories, setJobCategories] = useState([]);
+    const [states, setStates] = useState([]);
 
-    const locationOptions = [
-        { value: 'Afghanistan', label: 'Afghanistan' },
-        { value: 'Azerbaijan', label: 'Azerbaijan' },
-        { value: 'Australia', label: 'Australia' },   
-        { value: 'Bahrain', label: 'Bahrain' },
-        { value: 'Canada', label: 'Canada' },
-        { value: 'Cape Verde', label: 'Cape Verde' },
-        { value: 'Denmark', label: 'Denmark' },
-        { value: 'Djibouti', label: 'Djibouti' },
-        { value: 'Eritrea', label: 'Eritrea' },
-        { value: 'Estonia', label: 'Estonia' },
-        { value: 'Gambia', label: 'Gambia' },
-        { value: 'Germany', label: 'Germany' },
-        { value: 'Italy', label: 'Italy' },
-        { value: 'Russia', label: 'Russia' },
-    ];
+    useEffect(() => {
+        // Fetch job categories from the backend
+        const fetchJobCategories = async () => {
+            try {
+                const response = await api.get("/job-categories");
+                const categories = response.data.map(category => ({
+                    value: category.jobCategoryId,
+                    label: category.jobCategoryName,
+                }));
+                setJobCategories(categories);
+            } catch (error) {
+                console.error("Error fetching job categories:", error);
+            }
+        };
 
-    const typeOptions = [
-        { value: 'Full Time', label: 'Full Time' },
-        { value: 'Part Time', label: 'Part Time' },
-        { value: 'Freelancer', label: 'Freelancer' },
-        { value: 'Remote Work', label: 'Remote Work' },
-        { value: 'Office Work', label: 'Office Work' },
-    ];
+        fetchJobCategories();
+    }, []);
+
+  useEffect(() => {
+    const vietnamStates = State.getStatesOfCountry("VN").map((state) => ({
+      value: state.isoCode,
+      label: state.name,
+    }));
+
+    setStates(vietnamStates);
+  }, []);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         onSearch({
-            keyword,
-            location: selectedLocation ? selectedLocation.value : null,
-            type: selectedType ? selectedType.value : null
+          keyword,
+          location: selectedLocation ? selectedLocation.label : null,
+          Category: selectedCategory ? selectedCategory.value : null,
         });
     };
 
@@ -69,7 +76,7 @@ export default function FormSelect({ onSearch }) {
                             <div className="filter-search-form position-relative filter-border">
                                 <FiMapPin className="fea icon-20 icons" />
                                 <ToggleSelect
-                                    options={locationOptions}
+                                    options={states}
                                     value={selectedLocation}
                                     onChange={setSelectedLocation}
                                 />
@@ -83,9 +90,9 @@ export default function FormSelect({ onSearch }) {
                             <div className="filter-search-form relative filter-border">
                                 <FiBriefcase className="fea icon-20 icons" />
                                 <ToggleSelect
-                                    options={typeOptions}
-                                    value={selectedType}
-                                    onChange={setSelectedType}
+                                    options={jobCategories}
+                                    value={selectedCategory}
+                                    onChange={setSelectedCategory}
                                 />
                             </div>
                         </div>

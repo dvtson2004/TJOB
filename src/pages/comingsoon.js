@@ -50,7 +50,7 @@ export default function Comingsoom(){
                                 </div>
                             </div>
                             <div className="text-center">
-                                <p className="mb-0 text-white-50">© {new Date().getFullYear()} Jobnova. Design with <i className="mdi mdi-heart text-danger"></i> by <Link to="https://shreethemes.in/" target="_blank" className="text-reset">Shreethemes</Link>.</p>
+                                <p className="mb-0 text-white-50">© {new Date().getFullYear()} TopJob. Design with <i className="mdi mdi-heart text-danger"></i> by <Link to="https://shreethemes.in/" target="_blank" className="text-reset">Shreethemes</Link>.</p>
                             </div>
                         </div>
                     </div>

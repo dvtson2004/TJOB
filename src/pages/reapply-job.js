@@ -158,7 +158,7 @@ export default function JobApply() {
             <nav aria-label="breadcrumb" className="d-block">
               <ul className="breadcrumb breadcrumb-muted mb-0 p-0">
                 <li className="breadcrumb-item">
-                  <Link to="/">Jobnova</Link>
+                  <Link to="/">TopJob</Link>
                 </li>
                 <li className="breadcrumb-item">
                   <Link to="/job-grid-two">Job</Link>

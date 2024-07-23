@@ -31,7 +31,7 @@ export const jobColumns = [
   },
 ];
 
-const Datatablejob = () => {
+const DatatablejobModeration = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,7 +39,7 @@ const Datatablejob = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/jobs/inactive-list');
+        const response = await axios.get('https://topjob-backend-5219ff13ed0d.herokuapp.com//jobs/inactive-list');
         setJobs(transformData(response.data));
       } catch (error) {
         setError(error.message);
@@ -83,4 +83,4 @@ const Datatablejob = () => {
   );
 };
 
-export default Datatablejob;
+export default DatatablejobModeration;

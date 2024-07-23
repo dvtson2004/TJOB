@@ -39,7 +39,7 @@ const Datatablejob = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/jobs/list');
+        const response = await axios.get('https://topjob-backend-5219ff13ed0d.herokuapp.com//jobs/list');
         setJobs(transformData(response.data));
       } catch (error) {
         setError(error.message);

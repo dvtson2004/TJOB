@@ -15,7 +15,7 @@ export default function BlogDetail() {
     useEffect(() => {
         const fetchBlog = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/blogs/${id}`);
+                const response = await fetch(`https://topjob-backend-5219ff13ed0d.herokuapp.com/blogs/${id}`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch blog");
                 }
@@ -52,7 +52,7 @@ export default function BlogDetail() {
                         <div className="col-12">
                             <div className="title-heading text-center">
                                 <span className="badge bg-primary">
-                                    {blog?.tag || "Jobnova"}
+                                    {blog?.tag || "TopJob"}
                                 </span>
                                 <h5 className="heading fw-semibold mb-0 sub-heading text-white title-dark mt-4">
                                     {blog?.title ||
@@ -89,7 +89,7 @@ export default function BlogDetail() {
                         <nav aria-label="breadcrumb" className="d-block">
                             <ul className="breadcrumb breadcrumb-muted mb-0 p-0">
                                 <li className="breadcrumb-item">
-                                    <Link to="/">Jobnova</Link>
+                                    <Link to="/">TopJob</Link>
                                 </li>
                                 <li className="breadcrumb-item">
                                     <Link to="/blogss">Blogs</Link>

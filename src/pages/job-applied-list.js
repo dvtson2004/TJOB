@@ -9,7 +9,7 @@ import api from "../api/http";
 
 const fetchAppliedCVs = async () => {
   const token = sessionStorage.getItem("token");
-  const { data } = await axios.get("http://localhost:8080/jobSeeker/get-cvs", {
+  const { data } = await axios.get("https://topjob-backend-5219ff13ed0d.herokuapp.com//jobSeeker/get-cvs", {
     headers: {
       Authorization: token,
     },

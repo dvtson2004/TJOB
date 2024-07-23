@@ -14,7 +14,7 @@ const SingleJobPosts = () => {
   useEffect(() => {
     const fetchJob = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/jobs/view/${id}`);
+        const response = await axios.get(`https://topjob-backend-5219ff13ed0d.herokuapp.com//jobs/view/${id}`);
         setJob(response.data);
       } catch (error) {
         setError(error.message);

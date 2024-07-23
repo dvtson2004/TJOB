@@ -10,7 +10,7 @@ export default function BlogsSidebars() {
     useEffect(() => {
         const fetchRecentBlogs = async () => {
             try {
-                const response = await fetch("http://localhost:8080/blogs/recent");
+                const response = await fetch("https://topjob-backend-5219ff13ed0d.herokuapp.com//blogs/recent");
                 if (!response.ok) {
                     throw new Error("Failed to fetch recent blogs");
                 }
@@ -87,7 +87,7 @@ export default function BlogsSidebars() {
                                         >
                                             {item.title}
                                         </Link>
-                                        <span className="text-muted small">{item.createdAt}</span>
+                                        <span className="text-muted small">{item.createdDate}</span>
                                     </div>
                                 </div>
                             ))

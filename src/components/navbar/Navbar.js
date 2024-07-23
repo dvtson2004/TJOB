@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import "./navbar.scss";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlined";
 import { DarkModeContext } from "../../context/darkModeContext";
 

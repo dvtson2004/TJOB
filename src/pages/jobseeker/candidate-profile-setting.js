@@ -1,41 +1,61 @@
+//Part 1:
+
 import { useEffect, useState } from "react";
 
-import api from "../api/http";
-import bg1 from "../assets/images/hero/bg4.jpg"
-import useEnterpriseInfo from "../hook/useEnterpriseInfo";
-import NavbarDark from "../components/navbarDark";
-import Footer from "../components/footer";
-import ScrollTop from "../components/scrollTop";
+import api from "../../api/http";
+import bg1 from "../../assets/images/hero/bg5.jpg";
+import useJobSeekerInfo from "../../hook/useJobSeekerInfo";
+import NavbarDark from "../../components/navbarDark";
+import Footer from "../../components/footer";
+import ScrollTop from "../../components/scrollTop";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Input, Modal, notification } from "antd";
-import Loading from "../components/loading";
-import { FiCamera } from "../assets/icons/vander";
-import NotificationSettings from "../components/notification-setting/notificationSettings";
-import RichTextEditor from "../components/richtexteditor/RichTextEditor";
+import Loading from "../../components/loading";
+import { FiCamera } from "../../assets/icons/vander";
+import NotificationSettings from "../../components/notification-setting/notificationSettings";
+import RichTextEditor from "../../components/richtexteditor/RichTextEditor";
+import { toast } from "react-toastify";
+import StateCitySelector from "../../components/state-city-selector/State_City";
+import Selector from "../../components/state-city-selector/Selector";
+import axios from "axios";
+export default function CandidateProfileSetting() {
+  const [jobCategories, setJobCategories] = useState([]);
 
-export default function EnterpriseProfileSetting() {
-  //   let [file, setFile] = useState(image1);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const jobCategoriesResponse = await axios.get(
+          "https://topjob-backend-5219ff13ed0d.herokuapp.com//job-categories"
+        );
+        setJobCategories(jobCategoriesResponse.data);
+      } catch (error) {
+        console.error("There was an error fetching the job categories:", error);
+      }
+    }
+    fetchData();
+  }, []);
 
   const queryClient = useQueryClient();
   const token = sessionStorage.getItem("token");
-  const { data: enterpriseData } = useEnterpriseInfo();
-  const user = enterpriseData?.data;
+  const { data: userData } = useJobSeekerInfo();
+  const user = userData?.data;
 
-  const [enterpriseName, setEnterpriseName] = useState("");
-  const [founder, setFounder] = useState("");
-  const [headquarter, setHeadquarter] = useState("");
-  const [city, setCity] = useState("");
-  const [selectedState, setSelectedState] = useState("");
-  const [founded, setFounded] = useState("");
-  const [webUrl, setWebUrl] = useState("");
-  const [companyStory, setCompanyStory] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [stateName, setStateName] = useState("");
+  const [cityName, setCityName] = useState("");
   const [phone, setPhone] = useState("");
+  const [webUrl, setWebUrl] = useState("");
+  const [intro, setIntro] = useState("");
+  const [dob, setDob] = useState(""); // Complete the definition
+  const [gender, setGender] = useState("");
   const [errors, setErrors] = useState({}); // Define errors state
-  const [employees, setEmployees] = useState("");
-  console.log(enterpriseName); // Check if it's undefined
+
   const updateUserInfoMutation = useMutation({
     mutationFn: (body) => {
-      return api.patch("/enterprises/update-info", body, {
+      return api.patch("/jobSeeker/update-info", body, {
         headers: {
           Authorization: token,
         },
@@ -45,49 +65,74 @@ export default function EnterpriseProfileSetting() {
 
   useEffect(() => {
     if (user) {
-      setEnterpriseName(user.enterprise_name);
-      setFounder(user.founder);
-      setHeadquarter(user.headquarter);
-      setSelectedState(user.state);
-      setCompanyStory(user.companyStory);
-      setCity(user.city);
-      setFounded(user.founded);
-      setWebUrl(user.web_url);
+      setFirstName(user.first_name);
+      setLastName(user.last_name);
+      setEmail(user.user.email);
+      setStateName(user.state);
+      setCityName(user.city);
+      setIntro(user.intro);
+      setOccupation(user.occupation);
       setPhone(user.phone);
-      setEmployees(user.employees);
+      setWebUrl(user.web_url);
+      setGender(user.gender);
+      setDob(user.dob);
     }
   }, [user]);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file && isAllowed(file)) {
+      const reader = new FileReader();
+
+      reader.onload = function (event) {
+        console.log("event nested: ", event);
+        console.log("event nested-1: ", event.target);
+        console.log("event nested-2: ", event.target.result);
+
+        const dataURL = event.target.result;
+        console.log("Data URL:", dataURL);
+
+        // You can now use the dataURL as needed, e.g., to display an image.
+        setResume(dataURL);
+      };
+
+      // Read the file as a Data URL
+      reader.readAsDataURL(file);
+    } else {
+      toast.error("Invalid File Format");
+    }
+  };
+  const isAllowed = (file) => {
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+    return allowedTypes.includes(file.type);
+  };
 
   const handleInfoSubmit = (e) => {
     e.preventDefault();
     updateUserInfo(); // Trigger user info update
-    if (resume) {
-      handleUploadResume();
-    }
   };
 
   function updateUserInfo() {
     if (validateForm()) {
       const body = {
-        state: selectedState,
-        enterprise_name: enterpriseName,
-        founder: founder,
-        founded: founded,
-        headquarter: headquarter,
-        companyStory: companyStory,
-        city: city,
-        web_url: webUrl,
-        employees: employees,
+        state: stateName,
+        city: cityName,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        occupation: occupation,
+        intro: intro,
+        dob: dob,
+        gender: gender,
+        resume_url: resume,
       };
 
       updateUserInfoMutation.mutate(body, {
         onSuccess: (data) => {
-          notification.success({ message: "User info updated successfully:" });
-          // Optionally, you can perform any other actions here after updating the user info
+          toast.success("User info updated successfully:");
         },
         onError: (error) => {
-          notification.error({ message: "Error updating user info:" });
-          // Optionally, handle the error or show a notification to the user
+          toast.error("Error updating user info:");
         },
       });
     }
@@ -101,32 +146,41 @@ export default function EnterpriseProfileSetting() {
     const errorsCopy = { ...errors };
 
     // Validate First Name using regex
-    if (!firstNameRegex.test(enterpriseName.trim())) {
+    if (!firstNameRegex.test(firstName.trim())) {
       errorsCopy.firstName = "Invalid First Name";
       valid = false;
-      notification.error({ message: "Please enter a valid first name!" });
+      toast.error("Please enter a valid first name!");
     }
 
     // Validate Last Name using regex
-    if (!lastNameRegex.test(founder.trim())) {
+    if (!lastNameRegex.test(lastName.trim())) {
       errorsCopy.lastName = "Invalid Last Name";
       valid = false;
-      notification.error({ message: "Please enter a valid last name!" });
+      toast.error("Please enter a valid last name!");
     }
+    const today = new Date();
+    const dobDate = new Date(dob);
 
-    // Validate Email
-    if (!webUrl.trim()) {
-      errorsCopy.email = "Email is Required";
+    if (dobDate > today) {
+      errorsCopy.dob = "Date of Birth cannot be in the future";
       valid = false;
-      notification.error({ message: "Please enter email address!" });
+      toast.error("Date of Birth cannot be in the future!");
     } else {
-      const emailRegex = /^\S+@\S+\.\S+$/;
-      if (!emailRegex.test(webUrl)) {
-        errorsCopy.email = "Invalid Email Format";
+      // Optional: Check minimum age requirement
+      const minAge = 18; // Example minimum age
+      const maxAge = 75;
+      let age = today.getFullYear() - dobDate.getFullYear();
+      const m = today.getMonth() - dobDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < dobDate.getDate())) {
+        age--;
+      }
+      if (age < minAge) {
         valid = false;
-        notification.error({ message: "Please enter a valid email address!" });
-      } else {
-        errorsCopy.email = "";
+        toast.error(`You must be at least ${minAge} years old!`);
+      }
+      if (age > maxAge) {
+        valid = false;
+        toast.error(`You must be no older than ${maxAge} years old!`);
       }
     }
 
@@ -137,7 +191,7 @@ export default function EnterpriseProfileSetting() {
   //Contact Info Update
   const updateContactInfo = useMutation({
     mutationFn: (body) => {
-      return api.patch("/enterprises/update-contact-info", body, {
+      return api.patch("/jobSeeker/update-contact-info", body, {
         headers: {
           Authorization: token,
         },
@@ -155,12 +209,10 @@ export default function EnterpriseProfileSetting() {
 
       updateContactInfo.mutate(body, {
         onSuccess: (data) => {
-          notification.success({
-            message: "Contact info updated successfully:",
-          });
+          toast.success("Contact info updated successfully:");
         },
         onError: (error) => {
-          notification.error({ message: "Error updating contact info:" });
+          toast.error("Error updating contact info");
         },
       });
     }
@@ -177,27 +229,12 @@ export default function EnterpriseProfileSetting() {
       if (!phoneRegex.test(phone)) {
         errorsCopy.phone = "Invalid Phone Number Format";
         valid = false;
-        notification.error({ message: "Please enter correct phone number" });
+        toast.error("Please enter correct phone number");
       } else {
         errorsCopy.phone = "";
       }
     } else {
       errorsCopy.phone = "Phone Number is Required";
-      valid = false;
-    }
-
-    // Validate Website URL
-    if (webUrl.trim()) {
-      // Check if the website URL is in a valid format
-      const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-      if (!urlRegex.test(webUrl)) {
-        errorsCopy.webUrl = "Invalid Website URL Format";
-        valid = false;
-      } else {
-        errorsCopy.webUrl = "";
-      }
-    } else {
-      errorsCopy.webUrl = "Website URL is Required";
       valid = false;
     }
 
@@ -211,7 +248,7 @@ export default function EnterpriseProfileSetting() {
   // Function to handle form submission
   const updatePasswordMutation = useMutation({
     mutationFn: (body) => {
-      return api.patch("/enterprises/update-password", body, {
+      return api.patch("/update-password", body, {
         headers: {
           Authorization: token,
         },
@@ -228,12 +265,12 @@ export default function EnterpriseProfileSetting() {
       const body = { oldPassword, newPassword };
       updatePasswordMutation.mutate(body, {
         onSuccess() {
-          notification.success({ message: "Updated password successfully" });
+          toast.success("Updated password successfully");
         },
         onError(error) {
           const errorMessage =
             error.response?.data?.message || "An error occurred";
-          notification.error({ message: errorMessage });
+          toast.error(errorMessage);
         },
       });
     }
@@ -250,7 +287,7 @@ export default function EnterpriseProfileSetting() {
 
     if (!newPassword.trim()) {
       errorsCopy.newPassword = "New Password is Required";
-      notification.error({ message: "New Password is Required" });
+      toast.error("New Password is Required");
       valid = false;
     } else if (
       !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};:"\\|,.<>\/?]).{8,}/.test(
@@ -260,20 +297,19 @@ export default function EnterpriseProfileSetting() {
       errorsCopy.newPassword =
         "Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one number, and one special character.";
       valid = false;
-      notification.error({
-        message:
-          "Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one number, and one special character.",
-      });
+      toast.error(
+        "Password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one number, and one special character."
+      );
     }
 
     if (!confirmPassword.trim()) {
       errorsCopy.confirmPassword = "Confirm Password is Required";
       valid = false;
-      notification.error({ message: "New Password is Required" });
+      toast.error("New Password is Required");
     } else if (newPassword !== confirmPassword) {
       errorsCopy.confirmPassword = "Passwords do not match";
       valid = false;
-      notification.error({ message: "New Passwords do not match" });
+      toast.error("New Passwords do not match");
     }
 
     // Check if new password is same as old password
@@ -281,9 +317,7 @@ export default function EnterpriseProfileSetting() {
       errorsCopy.newPassword =
         "New Password must be different from Old Password";
       valid = false;
-      notification.error({
-        message: "New Password must be different from Old Password",
-      });
+      toast.error("New Password must be different from Old Password");
     }
 
     setErrors(errorsCopy);
@@ -298,7 +332,7 @@ export default function EnterpriseProfileSetting() {
   // Mutation to handle user deletion
   const deleteMutation = useMutation({
     mutationFn: () => {
-      return api.delete("/enterprises/delete-account", {
+      return api.delete("/delete-account", {
         headers: {
           Authorization: token,
         },
@@ -327,7 +361,7 @@ export default function EnterpriseProfileSetting() {
 
   const uploadAvatar = useMutation({
     mutationFn: (formData) => {
-      return api.patch("/enterprises/update-avatar", formData, {
+      return api.patch("/jobSeeker/update-avatar", formData, {
         headers: {
           "content-type": "multipart/form-data",
           Authorization: token,
@@ -335,44 +369,17 @@ export default function EnterpriseProfileSetting() {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries("ENTERPRISE_PROFILE");
-      notification.success({ message: "Update avatar successfully" });
+      queryClient.invalidateQueries("USER_PROFILE");
+      toast.success("Update avatar successfully");
     },
     onError: () => {
-      notification.error({ message: "Update avatar failed" });
-    },
-  });
-
-  const uploadResume = useMutation({
-    mutationFn: (formData) => {
-      return api.patch("/enterprises/update-resume", formData, {
-        headers: {
-          "content-type": "multipart/form-data",
-          Authorization: token,
-        },
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries("ENTERPRISE_PROFILE");
-      notification.success({ message: "Upload resume successfully" });
-    },
-    onError: () => {
-      notification.error({ message: "Upload resume failed" });
+      toast.error("Update avatar failed");
     },
   });
 
   // Function to handle file selection
-  // const handleFileChange = (e) => {
-  //   setResume(e.target.files[0]); // Update state with the selected resume file
-  // };
 
   // Function to handle form submission or other action to upload resume
-  const handleUploadResume = () => {
-    const formData = new FormData();
-    formData.append("resume", resume);
-    console.log("FormData:", formData);
-    uploadResume.mutate(formData);
-  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -398,7 +405,7 @@ export default function EnterpriseProfileSetting() {
 
   const changeNameMutation = useMutation({
     mutationFn: (body) => {
-      return api.patch("/enterprises/update-profile", body, {
+      return api.patch("/jobSeeker/update-profile", body, {
         headers: {
           Authorization: token,
         },
@@ -406,12 +413,14 @@ export default function EnterpriseProfileSetting() {
     },
   });
 
-
+  const showModalName = () => {
+    setIsModalNameOpen(true);
+  };
   const [isModalNameOpen, setIsModalNameOpen] = useState(false);
-  const [name, setName] = useState(user?.enterprise_name);
+  const [name, setName] = useState(user?.user_name);
 
   useEffect(() => {
-    setName(user?.enterprise_name);
+    setName(user?.user_name);
     // setAbout(user?.about);
   }, [user]);
 
@@ -419,11 +428,11 @@ export default function EnterpriseProfileSetting() {
     const body = { puser_name: name };
     changeNameMutation.mutate(body, {
       onSuccess() {
-        queryClient.invalidateQueries("ENTERPRISE_PROFILE");
-        notification.success({ message: "Edit name successfully" });
+        queryClient.invalidateQueries("USER_PROFILE");
+        toast.success("Edit name successfully");
       },
       onError() {
-        notification.error({ message: "Edit name failed, Try again later" });
+        toast.error("Edit name failed, Try again later");
       },
     });
     setIsModalNameOpen(false);
@@ -495,9 +504,13 @@ export default function EnterpriseProfileSetting() {
                     )}
                     <div className="ms-2">
                       <h5 className="mb-0">
-                        {user?.enterprise_name}
+                        {user?.gender == 0 ? "Mr. " : "Mrs. "}
+                        {""}
+                        {user?.firstName == null && user?.last_name == null
+                          ? user?.user_name
+                          : user?.first_name + " " + user?.last_name}
                       </h5>
-                      <p className="text-muted mb-0">{user?.city}, {user?.state}</p>
+                      <p className="text-muted mb-0">{user?.occupation}</p>
                     </div>
                   </div>
                 </div>
@@ -510,21 +523,21 @@ export default function EnterpriseProfileSetting() {
               <div className="col-12">
                 <div className="rounded shadow p-4">
                   <form onSubmit={handleInfoSubmit}>
-                    <h5>Company Detail :</h5>
+                    <h5>Personal Detail :</h5>
                     <div className="row mt-4">
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label fw-semibold">
-                            Enterprise Name:<span className="text-danger">*</span>
+                            First Name:<span className="text-danger">*</span>
                           </label>
                           <input
                             name="name"
-                            id="enterpriseName"
+                            id="firstname"
                             type="text"
                             className={`form-control ${errors.firstName} ? "is-invalid" :""`}
                             placeholder="First Name :"
-                            value={enterpriseName}
-                            onChange={(e) => setEnterpriseName(e.target.value)}
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
                           />
                           {errors.firstName && (
                             <div className="invalid-feedback">
@@ -537,16 +550,16 @@ export default function EnterpriseProfileSetting() {
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label fw-semibold">
-                            Founder:<span className="text-danger">*</span>
+                            Last Name:<span className="text-danger">*</span>
                           </label>
                           <input
                             name="name"
-                            id="Founder"
+                            id="lastname"
                             type="text"
                             className={`form-control ${errors.lastName} ? "is-invalid" :""`}
                             placeholder="Last Name :"
-                            value={founder}
-                            onChange={(e) => setFounder(e.target.value)}
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
                           />
                           {errors.lastName && (
                             <div className="invalid-feedback">
@@ -559,139 +572,83 @@ export default function EnterpriseProfileSetting() {
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label fw-semibold">
-                            Founded:<span className="text-danger">*</span>
+                            Your Email:
                           </label>
                           <input
-                            name="founded"
-                            id="Founded"
-                            type="text"
+                            name="email"
+                            id="email2"
+                            type="email"
                             className="form-control"
-                            placeholder="Your Founded Year :"
-                            value={founded}
-                            onChange={(e) => setFounded(e.target.value)}
+                            placeholder="Your email :"
+                            value={email}
+                            disabled={true}
                           />{" "}
                         </div>
                       </div>
-
                       <div className="col-md-6">
                         <div className="mb-3">
                           <label className="form-label fw-semibold">
-                            Employees:<span className="text-danger">*</span>
-                          </label>
-                          <input
-                            name="employees"
-                            id="employees"
-                            type="text"
-                            className="form-control"
-                            placeholder="Your total employees :"
-                            value={employees}
-                            onChange={(e) => setEmployees(e.target.value)}
-                          />{" "}
-                        </div>
-                      </div>
-
-                      <div className="col-md-6">
-                        <div className="mb-3">
-                          <label className="form-label fw-semibold">
-                            Headquarter:<span className="text-danger">*</span>
-                          </label>
-                          <input
-                            name="headquarter"
-                            id="Headquarter"
-                            type="text"
-                            className="form-control"
-                            placeholder="Your Headquarter :"
-                            value={headquarter}
-                            onChange={(e) => setHeadquarter(e.target.value)}
-                          />{" "}
-                        </div>
-                      </div>
-
-                      <div className="col-md-6">
-                        <div className="mb-3">
-                          <label className="form-label fw-semibold">
-                            Province:
+                            Occupation:
                           </label>
                           <select
                             className="form-control form-select"
-                            value={selectedState}
-                            onChange={(e) => setSelectedState(e.target.value)}
+                            id="Type"
+                            value={occupation}
+                            onChange={(e) => setOccupation(e.target.value)}
                           >
-                            <option value="">Select Province</option>
-                            <option value="An Giang">An Giang</option>
-                            <option value="Bà Rịa-Vũng Tàu">
-                              Bà Rịa-Vũng Tàu
-                            </option>
-                            <option value="Bạc Liêu">Bạc Liêu</option>
-                            <option value="Bắc Kạn">Bắc Kạn</option>
-                            <option value="Bắc Giang">Bắc Giang</option>
-                            <option value="Bắc Ninh">Bắc Ninh</option>
-                            <option value="Bến Tre">Bến Tre</option>
-                            <option value="Bình Dương">Bình Dương</option>
-                            <option value="Bình Định">Bình Định</option>
-                            <option value="Bình Phước">Bình Phước</option>
-                            <option value="Bình Thuận">Bình Thuận</option>
-                            <option value="Cà Mau">Cà Mau</option>
-                            <option value="Cần Thơ">Cần Thơ</option>
-                            <option value="Cao Bằng">Cao Bằng</option>
-                            <option value="Đà Nẵng">Đà Nẵng</option>
-                            <option value="Đắk Lắk">Đắk Lắk</option>
-                            <option value="Đắk Nông">Đắk Nông</option>
-                            <option value="Điện Biên">Điện Biên</option>
-                            <option value="Đồng Nai">Đồng Nai</option>
-                            <option value="Đồng Tháp">Đồng Tháp</option>
-                            <option value="Gia Lai">Gia Lai</option>
-                            <option value="Hà Giang">Hà Giang</option>
-                            <option value="Hà Nam">Hà Nam</option>
-                            <option value="Hà Nội">Hà Nội</option>
-                            <option value="Hà Tĩnh">Hà Tĩnh</option>
-                            <option value="Hải Dương">Hải Dương</option>
-                            <option value="Hải Phòng">Hải Phòng</option>
-                            <option value="Hậu Giang">Hậu Giang</option>
-                            <option value="Hòa Bình">Hòa Bình</option>
-                            <option value="Hồ Chí Minh (Sài Gòn)">
-                              Hồ Chí Minh (Sài Gòn)
-                            </option>
-                            <option value="Hưng Yên">Hưng Yên</option>
-                            <option value="Khánh Hòa">Khánh Hòa</option>
-                            <option value="Kiên Giang">Kiên Giang</option>
-                            <option value="Kon Tum">Kon Tum</option>
-                            <option value="Lai Châu">Lai Châu</option>
-                            <option value="Lâm Đồng">Lâm Đồng</option>
-                            <option value="Lạng Sơn">Lạng Sơn</option>
-                            <option value="Lào Cai">Lào Cai</option>
-                            <option value="Long An">Long An</option>
-                            <option value="Nam Định">Nam Định</option>
-                            <option value="Nghệ An">Nghệ An</option>
-                            <option value="Ninh Bình">Ninh Bình</option>
-                            <option value="Ninh Thuận">Ninh Thuận</option>
-                            <option value="Phú Thọ">Phú Thọ</option>
-                            <option value="Phú Yên">Phú Yên</option>
-                            <option value="Quảng Bình">Quảng Bình</option>
-                            <option value="Quảng Nam">Quảng Nam</option>
-                            <option value="Quảng Ngãi">Quảng Ngãi</option>
-                            <option value="Quảng Ninh">Quảng Ninh</option>
-                            <option value="Quảng Trị">Quảng Trị</option>
-                            <option value="Sóc Trăng">Sóc Trăng</option>
-                            <option value="Sơn La">Sơn La</option>
-                            <option value="Tây Ninh">Tây Ninh</option>
-                            <option value="Thái Bình">Thái Bình</option>
-                            <option value="Thái Nguyên">Thái Nguyên</option>
-                            <option value="Thanh Hóa">Thanh Hóa</option>
-                            <option value="Thừa Thiên Huế">
-                              Thừa Thiên Huế
-                            </option>
-                            <option value="Tiền Giang">Tiền Giang</option>
-                            <option value="Trà Vinh">Trà Vinh</option>
-                            <option value="Tuyên Quang">Tuyên Quang</option>
-                            <option value="Vĩnh Long">Vĩnh Long</option>
-                            <option value="Vĩnh Phúc">Vĩnh Phúc</option>
-                            <option value="Yên Bái">Yên Bái</option>
+                            {jobCategories.map((category) => (
+                              <option
+                                key={category.jobCategoryId}
+                                value={category.jobCategoryId}
+                              >
+                                {category.jobCategoryName}
+                              </option>
+                            ))}
                           </select>
                         </div>
                       </div>
 
-                      {/* <div className="col-md-6">
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="mb-3">
+                            <label className="form-label fw-semibold">
+                              Date of Birth:
+                            </label>
+                            <input
+                              className="form-control"
+                              type="date"
+                              value={dob}
+                              onChange={(e) => setDob(e.target.value)}
+                            />
+                          </div>
+                        </div>
+
+                        <div className="col-md-6">
+                          <div className="mb-3">
+                            <label className="form-label fw-semibold">
+                              Gender:
+                            </label>
+                            <select
+                              className="form-select"
+                              value={gender}
+                              onChange={(e) => setGender(e.target.value)}
+                            >
+                              <option value="">Select Gender</option>
+                              <option value="0">Male</option>
+                              <option value="1">Female</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <StateCitySelector
+                        stateName={stateName}
+                        setStateName={setStateName}
+                        cityName={cityName}
+                        setCityName={setCityName}
+                      />
+
+                      <div className="col-md-6">
                         <div className="mb-3">
                           <label
                             htmlFor="formFile"
@@ -706,14 +663,14 @@ export default function EnterpriseProfileSetting() {
                             onChange={handleFileChange}
                           />
                         </div>
-                      </div> */}
+                      </div>
 
                       <div className="col-12">
                         <div className="mb-3">
                           <label className="form-label fw-semibold">
-                            Company Story :
+                            Introduction :
                           </label>
-                          <RichTextEditor value={companyStory} onChange={setCompanyStory} />
+                          <RichTextEditor value={intro} onChange={setIntro} />
                         </div>
                       </div>
 
@@ -937,7 +894,7 @@ export default function EnterpriseProfileSetting() {
             </div>
           </div>
         </section>
-        <Footer top={false} />
+        <Footer top={true} />
         <ScrollTop />
       </>{" "}
       <Modal

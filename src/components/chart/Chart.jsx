@@ -1,8 +1,9 @@
 import "./chart.scss";
 import {
-  AreaChart,
-  Area,
+  BarChart,
+  Bar,
   XAxis,
+  YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
@@ -17,7 +18,7 @@ const Chart = ({ aspect, title }) => {
   useEffect(() => {
     const fetchMonthlyIncome = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/transactions/monthly-income?year=${year}`);
+        const response = await axios.get(`https://topjob-backend-5219ff13ed0d.herokuapp.com//transactions/monthly-income?year=${year}`);
         const transformedData = transformData(response.data);
         setData(transformedData);
       } catch (error) {
@@ -56,9 +57,7 @@ const Chart = ({ aspect, title }) => {
         </select>
       </div>
       <ResponsiveContainer width="100%" aspect={aspect}>
-        <AreaChart
-          width={730}
-          height={250}
+        <BarChart
           data={data}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
@@ -69,16 +68,14 @@ const Chart = ({ aspect, title }) => {
             </linearGradient>
           </defs>
           <XAxis dataKey="name" stroke="gray" />
+          <YAxis />
           <CartesianGrid strokeDasharray="3 3" className="chartGrid" />
           <Tooltip />
-          <Area
-            type="monotone"
+          <Bar
             dataKey="Total"
-            stroke="#8884d8"
-            fillOpacity={1}
             fill="url(#total)"
           />
-        </AreaChart>
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );

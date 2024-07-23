@@ -57,8 +57,8 @@ export default function JobApply() {
     }
 
     if (job) {
-      setOccupation(job?.title || "Game over");
-      setJobType(job?.jobType?.jobTypeName || "Go Home"); // Check if job.jobType is defined
+      setOccupation(job?.title || "");
+      setJobType(job?.jobType?.jobTypeName || ""); // Check if job.jobType is defined
     }
   }, [user, job]);
 
@@ -162,10 +162,10 @@ export default function JobApply() {
             <nav aria-label="breadcrumb" className="d-block">
               <ul className="breadcrumb breadcrumb-muted mb-0 p-0">
                 <li className="breadcrumb-item">
-                  <Link to="/">Jobnova</Link>
+                  <Link to="/">TopJob</Link>
                 </li>
                 <li className="breadcrumb-item">
-                  <Link to="/job-grid-two">Job</Link>
+                  <Link to="/job-list-one">Job</Link>
                 </li>
                 <li className="breadcrumb-item active" aria-current="page">
                   Job Apply

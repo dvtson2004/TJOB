@@ -11,7 +11,7 @@ const DatatableTransaction = () => {
     useEffect(() => {
         const fetchTransactions = async () => {
             try {
-                const response = await fetch('http://localhost:8080/transactions/list');
+                const response = await fetch('https://topjob-backend-5219ff13ed0d.herokuapp.com//transactions/list');
                 if (!response.ok) {
                     throw new Error('Failed to fetch transactions');
                 }

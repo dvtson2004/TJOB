@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import bg1 from '../../assets/images/hero/bg3.jpg'
-import logo from '../../assets/images/logo-dark.png'
+import logo from '../../assets/images/logo2/logo-dark.png'
 import '../../assets/css/eyes.css'
 import api from '../../api/http'
 import useProtectRoute from '../../hook/useProtectRoute'

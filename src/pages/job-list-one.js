@@ -33,6 +33,13 @@ export default function JobListOne() {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const { data: userData } = useJobSeekerInfo();
   const jobSeeker = userData?.data;
+  //
+  const [bookmarkChanges, setBookmarkChanges] = useState([]);
+  const [changedJobId, setChangedJobId] = useState(null);
+  //
+  const [noResults, setNoResults] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 10;
 
   const bookmarkMutation = useMutation({
     mutationFn: (jobId) => {
@@ -66,17 +73,54 @@ export default function JobListOne() {
     }
   }, [jobData]);
 
-  const handleSearch = ({ keyword, location, type }) => {
+  useEffect(() => {
+    if (bookmarkMutation.isSuccess || unbookmarkMutation.isSuccess) {
+      setBookmarkChanges((prevChanges) => [...prevChanges, changedJobId]);
+    }
+  }, [bookmarkMutation.isSuccess, unbookmarkMutation.isSuccess]);
+
+  useEffect(() => {
+    if (changedJobId !== null) {
+      setFilteredJobs((prevJobs) =>
+        prevJobs.map((job) =>
+          job.id === changedJobId
+            ? {
+              ...job,
+              bookmarks: job.bookmarks.map((bookmark) =>
+                bookmark.jobSeekers.jid === jobSeeker.jid
+                  ? { ...bookmark, isBookmarked: !bookmark.isBookmarked }
+                  : bookmark
+              ),
+            }
+            : job
+        )
+      );  
+    }
+  }, [bookmarkChanges]);
+
+
+  const handleSearch = ({ keyword, location, Category }) => {
     if (!jobData || !jobData.data) return;
+
+    console.log("Search Params:", { keyword, location, Category });
+
     const filtered = jobData.data.filter((job) => {
-      const matchesKeyword = job.title
-        .toLowerCase()
-        .includes(keyword.toLowerCase());
-      const matchesLocation = location ? job.country === location : true;
-      const matchesType = type ? job.jobTypeName === type : true;
-      return matchesKeyword && matchesLocation && matchesType;
+      const matchesKeyword = keyword
+        ? job.title.toLowerCase().includes(keyword.toLowerCase()) ||
+        job.enterprise.enterprise_name.toLowerCase().includes(keyword.toLowerCase())
+        : true;
+      const matchesLocation = location ? job.state === location : true;
+      const matchesCategory = Category
+        ? job.jobCategoryEntity.jobCategoryId === parseInt(Category, 10)  // Ensure Category is parsed as integer
+        : true;
+
+      return matchesKeyword && matchesLocation && matchesCategory;
     });
+
+    console.log("Filtered Jobs:", filtered);
     setFilteredJobs(filtered);
+    setNoResults(filtered.length === 0);
+    setCurrentPage(1); // Reset to the first page when new search is performed
   };
 
   const toggleBookmark = (jobId, isBookmarked) => {
@@ -84,7 +128,6 @@ export default function JobListOne() {
     console.log(userType); // Assuming you store user type in sessionStorage
     if (userType !== "Job-seeker") {
       toast.error("You need to log in as a job seeker to bookmark jobs.");
-      // Redirect to login page if not jobSeeker
       return;
     }
     if (isBookmarked === 0) {
@@ -94,9 +137,11 @@ export default function JobListOne() {
     }
   };
 
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading jobs</div>;
-  console.log(jobData);
+
   return (
     <>
       <Navbar navClass="defaultscroll sticky" />
@@ -147,58 +192,61 @@ export default function JobListOne() {
         </div>
 
         <div className="container mt-60">
-          <div className="row g-4">
-            {filteredJobs.map((item, index) => {
-              const createdAtDate = formatDateTime(item.createdAt);
-              const daysAgo = compareWithCurrentDate(createdAtDate);
+          {noResults ? (
+            <div className="alert alert-info text-center">
+              Sorry, No jobs match your search criteria.
+            </div>
+          ) : (
+            <div className="row g-4">
+              {filteredJobs.slice(
+                (currentPage - 1) * jobsPerPage,
+                currentPage * jobsPerPage
+              ).map((item, index) => {
+                const createdAtDate = formatDateTime(item.createdDate);
+                const daysAgo = compareWithCurrentDate(createdAtDate);
 
-              return (
-                <div className="col-12" key={index}>
-                  <div className="job-post job-post-list rounded shadow p-4 d-md-flex align-items-center justify-content-between position-relative">
-                    <div className="d-flex align-items-center w-310px">
-                      <img
-                        src={item.avatarUrl || ""}
-                        className="avatar avatar-small rounded shadow p-3 bg-white"
-                        alt=""
-                      />
-                      <div className="ms-3">
-                        <Link
-                          to={`/job-detail-one/${item.id}`}
-                          className="h5 title text-dark"
-                        >
-                          {item.title}
-                        </Link>
+                return (
+                  <div className="col-12" key={index}>
+                    <div className="job-post job-post-list rounded shadow p-4 d-md-flex align-items-center justify-content-between position-relative search-results">
+                      <div className="d-flex align-items-center w-310px">
+                        <img
+                          src={item.enterprise.avatar_url || ""}
+                          className="avatar avatar-small rounded shadow p-3 bg-white"
+                          alt=""
+                        />
+                        <div className="ms-3">
+                          <Link
+                            to={`/job-detail-three/${item.id}`}
+                            className="h5 title text-dark"
+                          >
+                            {item.title}
+                          </Link>
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="d-flex align-items-center justify-content-between d-md-block mt-3 mt-md-0 w-100px">
-                      <span className="badge bg-soft-primary rounded-pill">
-                        {item.jobTypeName}
-                      </span>
-                      <span className="text-muted d-flex align-items-center fw-medium mt-md-2">
-                        <FiClock className="fea icon-sm me-1 align-middle" />
-                        {daysAgo} days ago
-                      </span>
-                    </div>
+                      <div className="d-flex align-items-center justify-content-between d-md-block mt-3 mt-md-0 w-100px">
+                        <span className="badge bg-soft-primary rounded-pill">
+                          {item.jobTypeName}
+                        </span>
+                        <span className="text-muted d-flex align-items-center fw-medium mt-md-2">
+                          <FiClock className="fea icon-sm me-1 align-middle" />
+                          {daysAgo} days ago
+                        </span>
+                      </div>
 
-                    <div className="d-flex align-items-center justify-content-between d-md-block mt-2 mt-md-0 w-130px">
-                      <span className="text-muted d-flex align-items-center">
-                        <FiMapPin className="fea icon-sm me-1 align-middle" />
-                        {item.country}
-                      </span>
-                      <span className="d-flex fw-medium mt-md-2">
-                        {item.minSalary} - {item.maxSalary}/mo
-                      </span>
-                    </div>
-                    {/* {console.log(
-                      "bookmark",
-                      item.bookmarks.some(
-                        (bookmark) => bookmark.jobSeekers.jid === jobSeeker.jid
-                      )
-                    )} */}
-                    <div className="mt-3 mt-md-0">
-                      <button
-                        className={`btn btn-sm btn-icon btn-pills ${jobSeeker &&
+                      <div className="d-flex align-items-center justify-content-between d-md-block mt-2 mt-md-0 w-130px">
+                        <span className="text-muted d-flex align-items-center">
+                          <FiMapPin className="fea icon-sm me-1 align-middle" />
+                          {item.state}
+                        </span>
+                        <span className="d-flex fw-medium mt-md-2">
+                          {item.minSalary} - {item.maxSalary}/mo
+                        </span>
+                      </div>
+
+                      <div className="mt-3 mt-md-0">
+                        <button
+                          className={`btn btn-sm btn-icon btn-pills ${jobSeeker &&
                             item.bookmarks.some(
                               (bookmark) =>
                                 bookmark.jobSeekers.jid === jobSeeker.jid
@@ -208,65 +256,74 @@ export default function JobListOne() {
                               ? "btn-primary"
                               : "btn-soft-primary"
                             : "btn-soft-primary"
-                          } bookmark`}
-                        onClick={() =>
-                          toggleBookmark(
-                            item.id,
-                            item.bookmarks.some(
-                              (bookmark) =>
-                                bookmark.jobSeekers.jid === jobSeeker.jid
+                            } bookmark`}
+                          onClick={() =>
+                            toggleBookmark(
+                              item.id,
+                              item.bookmarks.some(
+                                (bookmark) =>
+                                  bookmark.jobSeekers.jid === jobSeeker.jid
+                              )
+                                ? item.bookmarks[0].isBookmarked
+                                : 0
                             )
-                              ? item.bookmarks[0].isBookmarked
-                              : 0
-                          )
-                        }
-                      >
-                        <FiBookmark className="icons" />
-                      </button>
-                      <Link
-                        to={`/job-detail-three/${item.id}`}
-                        className="btn btn-sm btn-primary w-full ms-md-1"
-                      >
-                        Apply Now
-                      </Link>
+                          }
+                        >
+                          <FiBookmark className="icons" />
+                        </button>
+                        <Link
+                          to={`/job-detail-three/${item.id}`}
+                          className="btn btn-sm btn-primary w-full ms-md-1"
+                        >
+                          Apply Now
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-          {/* phan trang */}
+                );
+              })}
+            </div>
+          )}
+          {/* Pagination */}
           <div className="row">
             <div className="col-12 mt-4 pt-2">
               <ul className="pagination justify-content-center mb-0">
-                <li className="page-item">
-                  <Link className="page-link" to="#" aria-label="Previous">
+                <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                  <button
+                    className="page-link"
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    aria-label="Previous"
+                  >
                     <span aria-hidden="true">
                       <i className="mdi mdi-chevron-left fs-6"></i>
                     </span>
-                  </Link>
+                  </button>
                 </li>
-                <li className="page-item">
-                  <Link className="page-link" to="#">
-                    1
-                  </Link>
-                </li>
-                <li className="page-item active">
-                  <Link className="page-link" to="#">
-                    2
-                  </Link>
-                </li>
-                <li className="page-item">
-                  <Link className="page-link" to="#">
-                    3
-                  </Link>
-                </li>
-                <li className="page-item">
-                  <Link className="page-link" to="#" aria-label="Next">
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <li
+                    key={index}
+                    className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
+                  >
+                    <button
+                      className="page-link"
+                      onClick={() => setCurrentPage(index + 1)}
+                    >
+                      {index + 1}
+                    </button>
+                  </li>
+                ))}
+                <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                  <button
+                    className="page-link"
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
+                    aria-label="Next"
+                  >
                     <span aria-hidden="true">
                       <i className="mdi mdi-chevron-right fs-6"></i>
                     </span>
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </div>

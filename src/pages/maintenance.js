@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import bg1 from "../assets/images/hero/bg2.jpg"
-import logo from "../assets/images/logo-icon-80-white.png"
+import logo from "../assets/images/logo2/logo-icon-80-white.png"
 
 export default function Maintenance(){
     let [minutes, setMinutes] = useState(0);

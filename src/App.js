@@ -16,11 +16,11 @@ import JobPost from "./pages/job-post";
 import Career from "./pages/career";
 import JobDetailThree from "./pages/job-detail-three";
 
-import Employers from "./pages/employers";
-import EmployerProfile from "./pages/employer-profile";
-import Candidates from "./pages/candidates";
-import CandidateProfile from "./pages/candidate-profile";
-import CandidateProfileSetting from "./pages/candidate-profile-setting";
+import Employers from "./pages/enterprise/employers";
+import EmployerProfile from "./pages/enterprise/employer-profile";
+
+import CandidateProfile from "./pages/jobseeker/candidate-profile";
+import CandidateProfileSetting from "./pages/jobseeker/candidate-profile-setting";
 import AboutUs from "./pages/aboutus";
 import Services from "./pages/services";
 import Pricing from "./pages/pricing";
@@ -34,7 +34,7 @@ import BlogDetail from "./pages/blog-detail";
 import Login from "./pages/login/login";
 import Signup from "./pages/signup/signup";
 import ResetPassword from "./pages/reset-password/reset-password";
-import LockScreen from "./pages/lock-screen";
+
 import Terms from "./pages/terms";
 import Privacy from "./pages/privacy";
 import ContactUs from "./pages/contactus";
@@ -53,11 +53,11 @@ import CreateResume from "./pages/create-cv/CreateResume";
 import BookmarksList from "./pages/bookmark-list";
 import CVAppliedList from "./pages/job-applied-list";
 import ReApply from "./pages/reapply-job";
-import EnterpriseProfileSetting from "./pages/enterprise-profile-setting";
-import JobListTwo from './pages/job-list-two'
+import EnterpriseProfileSetting from "./pages/enterprise/enterprise-profile-setting";
+import JobListTwo from "./pages/job-list-two";
 // admin
 import { productInputs, userInputs } from "./data/formSource";
-import { useContext } from "react";
+
 import ListJobPosts from "./pages/list/ListJobPosts";
 // page admin
 import SingleJobPosts from "./pages/single/SingleJobPosts";
@@ -73,24 +73,30 @@ import ListPackageService from "./pages/list/ListPackageService";
 import ListTransaction from "./pages/list/ListTransaction";
 import ListJobPostsModeration from "./pages/list/ListJobPostsModeration";
 import ListEditPackageService from "./pages/list/ListEditPackageService";
-import NewUser from "./pages/newUser/New";
-import JobSeekersTable from "./pages/candidate-applied-list";
+
+import JobSeekersTable from "./pages/jobseeker/candidate-applied-list";
 import NewJobSeeker from "./pages/newUser/NewJobSeeker";
 import NewPackage from "./pages/newUser/NewPackage";
 import ListBlog from "./pages/list/ListBlog";
 import ListEditBlog from "./pages/list/ListEditBlog";
 import NewBlog from "./pages/newUser/NewBlog";
-
+import JobListGuest from "./pages/job-list-guest";
+import ListStatistic from "./pages/list/ListStatistic";
+import Recharge from "./pages/payment/recharge";
+import PaymentResult from "./pages/payment/vnpay-return";
+import TransactionHistory from "./pages/payment/history";
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/index-two" element={<IndexTwo />} />
+        <Route path="/Ehome" element={<Index />} />
+        <Route path="/" element={<IndexTwo />} />
         <Route path="/job-categories" element={<JobCategories />} />
         <Route path="/job-grid-two" element={<JobGridTwo />} />
         <Route path="/job-list-one" element={<JobListOne />} />
-        <Route path='/job-list-by-enterprise' element={<JobListTwo />} />
+        <Route path="/job-list-by-enterprise/:eid" element={<JobListTwo />} />
+        <Route path="/job-list-by-enterprise" element={<JobListTwo />} />
+        <Route path="/job-list-guest/:eid" element={<JobListGuest />} />
         <Route
           path="/job-apply"
           element={<ProtectedRoute element={JobApply} />}
@@ -106,29 +112,11 @@ function App() {
         <Route path="/career" element={<ProtectedRoute element={Career} />} />
         <Route path="/job-detail-three" element={<JobDetailThree />} />
         <Route path="/job-detail-three/:id" element={<JobDetailThree />} />
-
-        <Route
-          path="/employers"
-          element={<ProtectedRoute element={Employers} />}
-        />
+        <Route path="/employers" element={<Employers />} />
         <Route path="/employer-profile" element={<EmployerProfile />} />
-        <Route
-          path="/employer-profile/:id"
-          element={<ProtectedRoute element={EmployerProfile} />}
-        />
-
-        <Route
-          path="/candidates"
-          element={<ProtectedRoute element={Candidates} />}
-        />
-        <Route
-          path="/candidate-profile"
-          element={<ProtectedRoute element={CandidateProfile} />}
-        />
-        <Route
-          path="/candidate-profile/:id"
-          element={<ProtectedRoute element={CandidateProfile} />}
-        />
+        <Route path="/employer-profile/:eid" element={<EmployerProfile />} />
+        <Route path="/candidate-profile" element={<CandidateProfile />} />
+        <Route path="/candidate-profile/:jid" element={<CandidateProfile />} />
         <Route
           path="/candidate-profile-setting"
           element={<ProtectedRoute element={CandidateProfileSetting} />}
@@ -137,7 +125,6 @@ function App() {
           path="/enterprise-profile-setting"
           element={<ProtectedRoute element={EnterpriseProfileSetting} />}
         />
-
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/services" element={<Services />} />
         <Route path="/pricing" element={<Pricing />} />
@@ -152,10 +139,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/lock-screen" element={<LockScreen />} />
         <Route path="/candidate-applied-list" element={<JobSeekersTable />} />
         "
-
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/contactus" element={<ContactUs />} />
@@ -165,10 +150,12 @@ function App() {
         <Route path="/maintenance" element={<Maintenance />} />
         <Route path="/update-password" element={<UpdatePassword />} />
         <Route path="/change-password" element={<CreatePassword />} />
-
-        <Route path='/create-template' element={<CreateTemplate />} />
-        <Route path='/template' element={<TemplateContainer />} />
-        <Route path="/resumeDetail/:templateID" element={<TemplateDesignPinDetail />} />
+        <Route path="/create-template" element={<CreateTemplate />} />
+        <Route path="/template" element={<TemplateContainer />} />
+        <Route
+          path="/resumeDetail/:templateID"
+          element={<TemplateDesignPinDetail />}
+        />
         <Route path="/resume/*" element={<CreateResume />} />
         {/* new */}
         <Route path="bookmark-list" element={<BookmarksList />} />
@@ -176,13 +163,12 @@ function App() {
         <Route path="reapply-job" element={<ReApply />} />
         <Route path="reapply-job/:jobId" element={<ReApply />} />
         {/* admin route */}
-
         {/* dashboard */}
-        <Route path="/admin/dashboard"
-          element={<ProtectedRoute element={AdminHome} />} />
-
+        <Route
+          path="/admin/dashboard"
+          element={<ProtectedRoute element={AdminHome} />}
+        />
         {/* <Route path="login" element={<Login />} /> */}
-
         {/* users */}
         <Route path="users">
           <Route path="job-seekers">
@@ -220,13 +206,11 @@ function App() {
             <Route path="view/:id" element={<SingleJobPostsModeration />} />
           </Route>
         </Route>
-
         {/* The article requires moderation */}
         <Route path="jobPostsModeration">
           <Route index element={<ListJobPostsModeration />} />
           <Route path=":productId" element={<SingleJobPostsModeration />} />
         </Route>
-
         {/* package services */}
         <Route path="packageServices">
           <Route index element={<ListPackageService />} />
@@ -236,16 +220,16 @@ function App() {
             element={<NewPackage inputs={userInputs} title="Add New Package" />}
           />
         </Route>
-
+        <Route path="statistic">
+          <Route index element={<ListStatistic />} />
+        </Route>
         <Route path="transactions">
           <Route index element={<ListTransaction />} />
         </Route>
-
         {/* profile */}
         <Route path="profileAdmin">
           <Route index element={<packageServices />} />
         </Route>
-
         <Route>
           <Route>
             <Route path="/users">
@@ -254,9 +238,7 @@ function App() {
             </Route>
           </Route>
         </Route>
-
         {/* blog */}
-
         <Route path="blogs">
           <Route index element={<ListBlog />} />
           <Route path="edit/:id" element={<ListEditBlog />} />
@@ -269,7 +251,19 @@ function App() {
         <Route path="/logout">
           <Route index element={<logout />} />
         </Route>
-
+        {/* payment */}
+        <Route
+          path="/recharge"
+          element={<ProtectedRoute element={Recharge} />}
+        />
+        <Route
+          path="/history"
+          element={<ProtectedRoute element={TransactionHistory} />}
+        />
+        <Route
+          path="/payment-result"
+          element={<ProtectedRoute element={PaymentResult} />}
+        />
       </Routes>
     </>
   );

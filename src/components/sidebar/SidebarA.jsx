@@ -1,20 +1,20 @@
 import "./sidebarA.scss";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+
 import StoreIcon from "@mui/icons-material/Store";
 import ExtensionIcon from '@mui/icons-material/Extension';
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import AnalyticsIcon from '@mui/icons-material/Analytics';
+
 import { Link, useNavigate } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext, useState } from "react";
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import GroupIcon from '@mui/icons-material/Group';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
   const [manageUsersOpen, setManageUsersOpen] = useState(false);
@@ -73,12 +73,12 @@ const Sidebar = () => {
                 </Link>
               </li>
 
-              <li>
+              {/* <li>
                 <Link to="/users/admins" style={{ textDecoration: "none" }}>
                   <AdminPanelSettingsIcon className="icon" />
                   <span>   Admin</span>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           )}
 
@@ -129,10 +129,16 @@ const Sidebar = () => {
               <span>   Blog</span>
             </ul>
           </Link>
+          <Link to="/statistic" style={{ textDecoration: "none" }}>
+            <ul>
+              <ExtensionIcon className="icon" />
+              <span>  Statistic</span>
+            </ul>
+          </Link>
           <Link to="/create-template" style={{ textDecoration: "none" }}>
             <ul>
               <ExtensionIcon className="icon" />
-              <span>   create template</span>
+              <span>   Create template</span>
             </ul>
           </Link>
 
