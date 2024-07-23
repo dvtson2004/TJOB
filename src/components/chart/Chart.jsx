@@ -18,7 +18,7 @@ const Chart = ({ aspect, title }) => {
   useEffect(() => {
     const fetchMonthlyIncome = async () => {
       try {
-        const response = await axios.get(`https://topjob-backend-5219ff13ed0d.herokuapp.com//transactions/monthly-income?year=${year}`);
+        const response = await axios.get(`https://topjob-backend-5219ff13ed0d.herokuapp.com/transactions/monthly-income?year=${year}`);
         const transformedData = transformData(response.data);
         setData(transformedData);
       } catch (error) {

@@ -62,7 +62,7 @@ export const ContactEm = () => {
 
     try {
       const response = await axios.post(
-        `https://topjob-backend-5219ff13ed0d.herokuapp.com//enterprises/send/${eid}`,
+        `https://topjob-backend-5219ff13ed0d.herokuapp.com/enterprises/send/${eid}`,
         data
       );
       if (response.status === 200) {

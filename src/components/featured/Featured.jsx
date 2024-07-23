@@ -16,7 +16,7 @@ const Featured = () => {
   useEffect(() => {
     const fetchDailyRevenue = async () => {
       try {
-        const response = await axios.get('https://topjob-backend-5219ff13ed0d.herokuapp.com//transactions/daily-revenue');
+        const response = await axios.get('https://topjob-backend-5219ff13ed0d.herokuapp.com/transactions/daily-revenue');
         setDailyRevenue(response.data);
       } catch (error) {
         console.error('Error fetching daily revenue:', error.message);
@@ -25,7 +25,7 @@ const Featured = () => {
 
     const fetchWeeklyRevenue = async () => {
       try {
-        const response = await axios.get('https://topjob-backend-5219ff13ed0d.herokuapp.com//transactions/weekly-revenue');
+        const response = await axios.get('https://topjob-backend-5219ff13ed0d.herokuapp.com/transactions/weekly-revenue');
         setWeeklyRevenue(response.data);
       } catch (error) {
         console.error('Error fetching weekly revenue:', error.message);
@@ -34,7 +34,7 @@ const Featured = () => {
 
     const fetchMonthlyRevenue = async () => {
       try {
-        const response = await axios.get('https://topjob-backend-5219ff13ed0d.herokuapp.com//transactions/monthly-revenue');
+        const response = await axios.get('https://topjob-backend-5219ff13ed0d.herokuapp.com/transactions/monthly-revenue');
         setMonthlyRevenue(response.data);
       } catch (error) {
         console.error('Error fetching monthly revenue:', error.message);

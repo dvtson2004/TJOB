@@ -35,7 +35,7 @@ export default function TransactionHistory() {
   ]);
 
   const fetchTransactions = async () => {
-    await fetch("https://topjob-backend-5219ff13ed0d.herokuapp.com//payment/history", {
+    await fetch("https://topjob-backend-5219ff13ed0d.herokuapp.com/payment/history", {
       method: "GET",
       headers: {
         Authorization: token,

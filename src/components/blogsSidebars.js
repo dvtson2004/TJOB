@@ -10,7 +10,7 @@ export default function BlogsSidebars() {
     useEffect(() => {
         const fetchRecentBlogs = async () => {
             try {
-                const response = await fetch("https://topjob-backend-5219ff13ed0d.herokuapp.com//blogs/recent");
+                const response = await fetch("https://topjob-backend-5219ff13ed0d.herokuapp.com/blogs/recent");
                 if (!response.ok) {
                     throw new Error("Failed to fetch recent blogs");
                 }

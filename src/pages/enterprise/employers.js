@@ -21,7 +21,7 @@ export default function Employers() {
   useEffect(() => {
     const fetchEnterprises = async () => {
       try {
-        const response = await fetch("https://topjob-backend-5219ff13ed0d.herokuapp.com//enterprises/list");
+        const response = await fetch("https://topjob-backend-5219ff13ed0d.herokuapp.com/enterprises/list");
         if (!response.ok) {
           throw new Error("Failed to fetch enterprises");
         }

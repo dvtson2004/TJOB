@@ -26,7 +26,7 @@ const NewBlog = ({ title }) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("https://topjob-backend-5219ff13ed0d.herokuapp.com//blogs/create", formData, {
+            const response = await axios.post("https://topjob-backend-5219ff13ed0d.herokuapp.com/blogs/create", formData, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

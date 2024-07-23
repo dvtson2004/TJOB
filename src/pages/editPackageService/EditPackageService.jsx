@@ -19,7 +19,7 @@ const EditPackageService = () => {
     useEffect(() => {
         const fetchPackage = async () => {
             try {
-                const response = await axios.get(`https://topjob-backend-5219ff13ed0d.herokuapp.com//packageServices/${id}`);
+                const response = await axios.get(`https://topjob-backend-5219ff13ed0d.herokuapp.com/packageServices/${id}`);
                 setPackageData(response.data);
             } catch (error) {
                 setError(error.message);
@@ -41,7 +41,7 @@ const EditPackageService = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`https://topjob-backend-5219ff13ed0d.herokuapp.com//packageServices/${id}`, packageData);
+            await axios.put(`https://topjob-backend-5219ff13ed0d.herokuapp.com/packageServices/${id}`, packageData);
             setSuccessMessage('Package updated successfully!');
             setTimeout(() => {
                 navigate('/packageServices');

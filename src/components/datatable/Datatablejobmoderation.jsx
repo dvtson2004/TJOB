@@ -39,7 +39,7 @@ const DatatablejobModeration = () => {
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get('https://topjob-backend-5219ff13ed0d.herokuapp.com//jobs/inactive-list');
+        const response = await axios.get('https://topjob-backend-5219ff13ed0d.herokuapp.com/jobs/inactive-list');
         setJobs(transformData(response.data));
       } catch (error) {
         setError(error.message);

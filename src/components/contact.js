@@ -61,7 +61,7 @@ export const ContactUs = () => {
 
     try {
       const response = await axios.post(
-        `https://topjob-backend-5219ff13ed0d.herokuapp.com//jobSeeker/send/${jid}`,
+        `https://topjob-backend-5219ff13ed0d.herokuapp.com/jobSeeker/send/${jid}`,
         data
       );
       if (response.status === 200) {

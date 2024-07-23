@@ -37,7 +37,7 @@ function JobSeekersTable() {
       try {
         const token = sessionStorage.getItem("token");
         const response = await axios.get(
-          "https://topjob-backend-5219ff13ed0d.herokuapp.com//enterprises/get-cv-applied",
+          "https://topjob-backend-5219ff13ed0d.herokuapp.com/enterprises/get-cv-applied",
           {
             headers: {
               Authorization: token,
@@ -108,7 +108,7 @@ function JobSeekersTable() {
     try {
       const token = sessionStorage.getItem("token");
       const response = await axios.patch(
-        `https://topjob-backend-5219ff13ed0d.herokuapp.com//enterprises/accept-cv/${uid}`,
+        `https://topjob-backend-5219ff13ed0d.herokuapp.com/enterprises/accept-cv/${uid}`,
         {},
         {
           headers: {
@@ -134,7 +134,7 @@ function JobSeekersTable() {
     try {
       const token = sessionStorage.getItem("token");
       const response = await axios.patch(
-        `https://topjob-backend-5219ff13ed0d.herokuapp.com//enterprises/reject-cv/${uid}`,
+        `https://topjob-backend-5219ff13ed0d.herokuapp.com/enterprises/reject-cv/${uid}`,
         { reasons: rejectionReasons },
         {
           headers: {

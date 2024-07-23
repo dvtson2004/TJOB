@@ -11,7 +11,7 @@ const Datatablejob = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://topjob-backend-5219ff13ed0d.herokuapp.com//jobs");
+        const response = await fetch("https://topjob-backend-5219ff13ed0d.herokuapp.com/jobs");
         if (!response.ok) {
           throw new Error("Failed to fetch job posts");
         }
@@ -29,7 +29,7 @@ const Datatablejob = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`https://topjob-backend-5219ff13ed0d.herokuapp.com//jobs/${id}`, {
+      const response = await fetch(`https://topjob-backend-5219ff13ed0d.herokuapp.com/jobs/${id}`, {
         method: 'DELETE',
       });
       if (!response.ok) {

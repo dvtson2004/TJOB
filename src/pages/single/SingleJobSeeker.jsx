@@ -14,7 +14,7 @@ const SingleJobSeeker = () => {
     useEffect(() => {
         const fetchJobSeeker = async () => {
             try {
-                const response = await fetch(`https://topjob-backend-5219ff13ed0d.herokuapp.com//job-seekers/view/${id}`);
+                const response = await fetch(`https://topjob-backend-5219ff13ed0d.herokuapp.com/job-seekers/view/${id}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch job seeker');
                 }

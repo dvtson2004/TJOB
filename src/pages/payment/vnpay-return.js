@@ -30,7 +30,7 @@ export default function PaymentResult() {
 
   const fetchSignValue = async (fields) => {
     console.log(1123);
-    const response = await fetch("https://topjob-backend-5219ff13ed0d.herokuapp.com//payment/return", {
+    const response = await fetch("https://topjob-backend-5219ff13ed0d.herokuapp.com/payment/return", {
       method: "POST",
       headers: {
         Authorization: token,

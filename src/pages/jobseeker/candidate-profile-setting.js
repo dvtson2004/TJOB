@@ -25,7 +25,7 @@ export default function CandidateProfileSetting() {
     async function fetchData() {
       try {
         const jobCategoriesResponse = await axios.get(
-          "https://topjob-backend-5219ff13ed0d.herokuapp.com//job-categories"
+          "https://topjob-backend-5219ff13ed0d.herokuapp.com/job-categories"
         );
         setJobCategories(jobCategoriesResponse.data);
       } catch (error) {
