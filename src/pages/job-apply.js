@@ -58,7 +58,7 @@ export default function JobApply() {
 
     if (job) {
       setOccupation(job?.title || "");
-      setJobType(job?.jobType?.jobTypeName || ""); // Check if job.jobType is defined
+      setJobType(job?.jobTypeEntity?.jobTypeName || ""); // Check if job.jobType is defined
     }
   }, [user, job]);
 
