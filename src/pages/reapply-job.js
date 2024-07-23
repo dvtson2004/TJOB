@@ -54,7 +54,7 @@ export default function JobApply() {
 
     if (job) {
       setOccupation(job?.title || "Game over");
-      setJobType(job?.jobType?.jobTypeName || "Go Home"); // Check if job.jobType is defined
+      setJobType(job?.jobTypeEntity?.jobTypeName || "Go Home"); // Check if job.jobType is defined
     }
   }, [user, job]);
 
